@@ -1,0 +1,4 @@
+
+```sh
+wrangler dev --remote
+```

@@ -1,3 +1,6 @@
 name = "ananas-api"
 compatibility_date = "2023-12-29"
+main = "src/index.js"
 
+[ai]
+binding = "AI"
