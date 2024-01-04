@@ -12,10 +12,9 @@ curl  http://localhost:8787
 
 
 ```sh
-TRANSLATE_TEXT="How do you do, fellow kids?"
 curl -X POST http://localhost:8787 \
 -H "Content-Type: application/json" \
--d '{"text": "$TRANSLATE_TEXT", "from_lang": "en", "to_languages": ["es", "fr", "de"]}'
+-d '{"text": "How do you do, fellow kids?", "src_lang": "en", "to_languages": ["es", "fr", "de"]}'
 
 ```
 
