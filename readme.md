@@ -18,10 +18,10 @@ curl -X POST http://localhost:8787 \
 
 ```
 
-### Git pre-push hook
+### Use the example pre-push hook
 ```sh
 mkdir -p .git/hooks && \
-	touch .git/hooks/pre-push && \
+	cp git-pre-push-hook .git/hooks/pre-push && \
 	chmod +x .git/hooks/pre-commit
 ```
 
