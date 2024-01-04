@@ -12,11 +12,12 @@ export default {
       from_lang = data.from_lang || 'en'; // Default to 'en' if from_lang is not provided
       languageDefinition = data.from_lang ? 'user' : 'assumed en'; // Set language definition
 
+			to_languages = ['es', 'ja', 'ru'];
       if (typeof data.to_languages === 'string') {
-        to_languages = data.to_languages.includes(',') ? data.to_languages.split(',') : [data.to_languages];
-      } else {
-        to_languages = ['es', 'ja', 'ru']; // Default languages
-      }
+				to_languages = data.to_languages.split(',').map(lang => lang.trim()); // Split string into array
+			} else if (Array.isArray(data.to_languages)) {
+				to_languages = data.to_languages; // Use the array as is
+			}
 
       const translationsPromises = to_languages.map(lang => 
         ai.run('@cf/meta/m2m100-1.2b', {
