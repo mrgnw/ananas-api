@@ -4,19 +4,34 @@ export default {
 	async fetch(request, env) {
 		const ai = new Ai(env.AI);
 		let text, from_lang, to_languages;
-		let languageDefinition; // Will be set based on whether language is user-defined or assumed
+		let languageDefinition = 'assumed en';
 
-		if (request.method === "POST") {
+
+		if (request.method === "GET") {
+			return new Response(JSON.stringify({
+				"en": "hello everybody",
+				"es": "Hola a todos",
+				"ja": "こんにちはみんな",
+				"ru": "Привет всем",
+				"metadata": {
+					"src_language": "en",
+					"language_definition": languageDefinition
+				}
+			}), {
+				headers: { 'Content-Type': 'application/json' }
+			});
+		}
+		else if (request.method === "POST") {
 			const data = await request.json();
 			text = data.text;
-			from_lang = data.from_lang || 'en'; // Default to 'en' if from_lang is not provided
-			languageDefinition = data.from_lang ? 'user' : 'assumed en'; // Set language definition
+			from_lang = data.from_lang || 'en';
+			languageDefinition = data.from_lang ? 'user' : languageDefinition
 
 			to_languages = ['es', 'ja', 'ru'];
 			if (typeof data.to_languages === 'string') {
-				to_languages = data.to_languages.split(',').map(lang => lang.trim()); // Split string into array
+				to_languages = data.to_languages.split(',').map(lang => lang.trim());
 			} else if (Array.isArray(data.to_languages)) {
-				to_languages = data.to_languages; // Use the array as is
+				to_languages = data.to_languages;
 			}
 
 			const translationsPromises = to_languages.map(lang =>
@@ -34,7 +49,7 @@ export default {
 				return { ...acc, ...translation };
 			}, {});
 
-			// Construct the final response object with source language text
+			// Construct the final response object with source language metadata
 			const responseObject = {
 				[from_lang]: text,
 				...flattenedTranslations,
@@ -48,19 +63,6 @@ export default {
 				headers: { 'Content-Type': 'application/json' }
 			});
 
-		} else { // Direct response for default GET request
-			return new Response(JSON.stringify({
-				"en": "hello everybody",
-				"es": "Hola a todos",
-				"ja": "こんにちはみんな",
-				"ru": "Привет всем",
-				"metadata": {
-					"src_language": "en",
-					"language_definition": languageDefinition
-				}
-			}), {
-				headers: { 'Content-Type': 'application/json' }
-			});
 		}
 	}
 };
