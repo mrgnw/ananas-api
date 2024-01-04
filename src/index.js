@@ -3,7 +3,7 @@ import { Ai } from './vendor/@cloudflare/ai.js';
 export default {
 	async fetch(request, env) {
 		const ai = new Ai(env.AI);
-		let text, from_lang, to_languages;
+		let text, src_lang, tgt_langs;
 		let languageDefinition = 'assumed en';
 
 
@@ -14,7 +14,7 @@ export default {
 				"ja": "こんにちはみんな",
 				"ru": "Привет всем",
 				"metadata": {
-					"src_language": "en",
+					"src_lang": "en",
 					"language_definition": languageDefinition
 				}
 			}), {
@@ -24,20 +24,20 @@ export default {
 		else if (request.method === "POST") {
 			const data = await request.json();
 			text = data.text;
-			from_lang = data.from_lang || 'en';
-			languageDefinition = data.from_lang ? 'user' : languageDefinition
+			src_lang = data.src_lang || 'en';
+			languageDefinition = data.src_lang ? 'user' : languageDefinition
 
-			to_languages = ['es', 'ja', 'ru'];
-			if (typeof data.to_languages === 'string') {
-				to_languages = data.to_languages.split(',').map(lang => lang.trim());
-			} else if (Array.isArray(data.to_languages)) {
-				to_languages = data.to_languages;
+			tgt_langs = ['es', 'ja', 'ru'];
+			if (typeof data.tgt_langs === 'string') {
+				tgt_langs = data.tgt_langs.split(',').map(lang => lang.trim());
+			} else if (Array.isArray(data.tgt_langs)) {
+				tgt_langs = data.tgt_langs;
 			}
 
-			const translationsPromises = to_languages.map(lang =>
+			const translationsPromises = tgt_langs.map(lang =>
 				ai.run('@cf/meta/m2m100-1.2b', {
 					text: text,
-					source_lang: from_lang,
+					source_lang: src_lang,
 					target_lang: lang
 				}).then(response => ({ [lang]: response.translated_text }))
 			);
@@ -51,10 +51,10 @@ export default {
 
 			// Construct the final response object with source language metadata
 			const responseObject = {
-				[from_lang]: text,
+				[src_lang]: text,
 				...flattenedTranslations,
 				metadata: {
-					src_language: from_lang,
+					src_lang: src_lang,
 					language_definition: languageDefinition
 				}
 			};
