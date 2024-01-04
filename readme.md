@@ -10,6 +10,7 @@ wrangler dev
 curl  http://localhost:8787
 ```
 
+
 ```sh
 TRANSLATE_TEXT="How do you do, fellow kids?"
 curl -X POST http://localhost:8787 \
