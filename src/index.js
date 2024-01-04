@@ -6,7 +6,6 @@ export default {
 		let text, src_lang, tgt_langs;
 		let languageDefinition = 'assumed en';
 
-
 		if (request.method === "GET") {
 			return new Response(JSON.stringify({
 				"en": "hello everybody",
