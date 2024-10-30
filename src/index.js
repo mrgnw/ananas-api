@@ -39,6 +39,8 @@ async function handlePostRequest(request, ai) {
 		return { [lang]: translatedText };
 	}));
 
+	translations.unshift({ original: data.text });
+
 	return new Response(JSON.stringify({
 		[src_lang]: data.text,
 		...translations.reduce((acc, translation) => ({ ...acc, ...translation }), {}),
