@@ -33,7 +33,10 @@ async function handlePostRequest(request, ai) {
 			source_lang: src_lang,
 			target_lang: lang
 		});
-		return { [lang]: response.translated_text };
+		const translatedText = typeof response.translated_text === 'object' 
+			? response.translated_text[lang]
+			: response.translated_text;
+		return { [lang]: translatedText };
 	}));
 
 	return new Response(JSON.stringify({
