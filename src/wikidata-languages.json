@@ -1,0 +1,4311 @@
+[
+  {
+    "iso": "zho",
+    "iso1": "zh",
+    "countries": [
+      "People's Republic of China",
+      "Taiwan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Chinese",
+    "nativeNames": [
+      "中文",
+      "汉语",
+      "漢語"
+    ],
+    "nativeSpeakers_k": 1299877,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters",
+      "simplified Chinese characters",
+      "traditional Chinese characters"
+    ]
+  },
+  {
+    "iso": "cmn",
+    "iso1": null,
+    "countries": [
+      "Brunei",
+      "Indonesia",
+      "Malaysia",
+      "People's Republic of China",
+      "Philippines",
+      "Singapore",
+      "Taiwan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Mandarin",
+    "nativeNames": [],
+    "nativeSpeakers_k": 918000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters"
+    ]
+  },
+  {
+    "iso": "eng",
+    "iso1": "en",
+    "countries": [
+      "American Samoa",
+      "Anguilla",
+      "Antigua and Barbuda",
+      "Aruba",
+      "Australia",
+      "Bahrain",
+      "Barbados",
+      "Belize",
+      "Bermuda",
+      "Bhutan",
+      "Botswana",
+      "British Indian Ocean Territory",
+      "British Virgin Islands",
+      "Brunei",
+      "Cambodia",
+      "Cameroon",
+      "Canada",
+      "Cayman Islands",
+      "Cook Islands",
+      "Dominica",
+      "Eritrea",
+      "Eswatini",
+      "Ethiopia",
+      "Falkland Islands",
+      "Federated States of Micronesia",
+      "Fiji",
+      "Ghana",
+      "Gibraltar",
+      "Grenada",
+      "Guernsey",
+      "Guyana",
+      "India",
+      "Indonesia",
+      "Ireland",
+      "Isle of Man",
+      "Israel",
+      "Jamaica",
+      "Jersey",
+      "Kenya",
+      "Kiribati",
+      "Lebanon",
+      "Lesotho",
+      "Liberia",
+      "Madagascar",
+      "Malawi",
+      "Malaysia",
+      "Maldives",
+      "Malta",
+      "Marshall Islands",
+      "Mauritius",
+      "Montserrat",
+      "Namibia",
+      "Nauru",
+      "New Zealand",
+      "Nigeria",
+      "Niue",
+      "Oman",
+      "Pakistan",
+      "Palau",
+      "Papua New Guinea",
+      "Philippines",
+      "Pitcairn Islands",
+      "Rwanda",
+      "Saint Helena, Ascension and Tristan da Cunha",
+      "Saint Kitts and Nevis",
+      "Saint Lucia",
+      "Saint Vincent and the Grenadines",
+      "Saint-Martin",
+      "Samoa",
+      "Seychelles",
+      "Sierra Leone",
+      "Singapore",
+      "Sint Maarten",
+      "Solomon Islands",
+      "South Africa",
+      "South Sudan",
+      "Sri Lanka",
+      "Sudan",
+      "Tanzania",
+      "The Bahamas",
+      "The Gambia",
+      "Tokelau",
+      "Tonga",
+      "Trinidad and Tobago",
+      "Turks and Caicos Islands",
+      "Tuvalu",
+      "Uganda",
+      "United Arab Emirates",
+      "United Kingdom",
+      "United States",
+      "United States Virgin Islands",
+      "Vanuatu",
+      "Zambia",
+      "Zimbabwe"
+    ],
+    "ethnologueStatus": "3 Wider Communication",
+    "langLabel": "English",
+    "nativeNames": [
+      "English"
+    ],
+    "nativeSpeakers_k": 753359,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "English orthography",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "spa",
+    "iso1": "es",
+    "countries": [
+      "Andorra",
+      "Argentina",
+      "Aruba",
+      "Belize",
+      "Bolivia",
+      "Chile",
+      "Colombia",
+      "Costa Rica",
+      "Cuba",
+      "Dominican Republic",
+      "Ecuador",
+      "El Salvador",
+      "Equatorial Guinea",
+      "Gibraltar",
+      "Guatemala",
+      "Honduras",
+      "Mexico",
+      "Nicaragua",
+      "Panama",
+      "Paraguay",
+      "Peru",
+      "Philippines",
+      "Sahrawi Arab Democratic Republic",
+      "Spain",
+      "United States",
+      "Uruguay",
+      "Venezuela"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Spanish",
+    "nativeNames": [
+      "castellano",
+      "español"
+    ],
+    "nativeSpeakers_k": 485000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hin",
+    "iso1": "hi",
+    "countries": [
+      "Fiji",
+      "India",
+      "Nepal",
+      "Pakistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Hindi",
+    "nativeNames": [
+      "मानक हिन्दी",
+      "हिन्दी"
+    ],
+    "nativeSpeakers_k": 341000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "ara",
+    "iso1": "ar",
+    "countries": [
+      "Algeria",
+      "Azerbaijan",
+      "Bahrain",
+      "Chad",
+      "Comoros",
+      "Djibouti",
+      "Egypt",
+      "Eritrea",
+      "Indonesia",
+      "Iran",
+      "Iraq",
+      "Israel",
+      "Jordan",
+      "Kenya",
+      "Kuwait",
+      "Lebanon",
+      "Libya",
+      "Malaysia",
+      "Mali",
+      "Mauritania",
+      "Morocco",
+      "Niger",
+      "Oman",
+      "Palestine",
+      "Palestinian National Authority",
+      "Portugal",
+      "Qatar",
+      "Romania",
+      "Saudi Arabia",
+      "Senegal",
+      "Somalia",
+      "South Sudan",
+      "Spain",
+      "Sudan",
+      "Syria",
+      "Tanzania",
+      "Tunisia",
+      "Turkey",
+      "United Arab Emirates",
+      "Western Sahara",
+      "Yemen"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Arabic",
+    "nativeNames": [
+      "اللُّغَة العَرَبِيّة"
+    ],
+    "nativeSpeakers_k": 315421,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Arabic script"
+    ]
+  },
+  {
+    "iso": "ben",
+    "iso1": "bn",
+    "countries": [
+      "Bangladesh",
+      "India"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Bangla",
+    "nativeNames": [
+      "বাংলা"
+    ],
+    "nativeSpeakers_k": 300000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Bangla alphabet",
+      "Bengali Braille"
+    ]
+  },
+  {
+    "iso": "por",
+    "iso1": "pt",
+    "countries": [
+      "Angola",
+      "Brazil",
+      "Cape Verde",
+      "Guinea-Bissau",
+      "Mozambique",
+      "Portugal",
+      "Spain",
+      "São Tomé and Príncipe",
+      "Taiwan",
+      "Timor-Leste"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Portuguese",
+    "nativeNames": [
+      "português"
+    ],
+    "nativeSpeakers_k": 254300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Portuguese alphabet"
+    ]
+  },
+  {
+    "iso": "fra",
+    "iso1": "fr",
+    "countries": [
+      "Algeria",
+      "Andorra",
+      "Belgium",
+      "Benin",
+      "Burkina Faso",
+      "Burundi",
+      "Cambodia",
+      "Cameroon",
+      "Canada",
+      "Central African Republic",
+      "Chad",
+      "Comoros",
+      "Democratic Republic of the Congo",
+      "Djibouti",
+      "Equatorial Guinea",
+      "France",
+      "Gabon",
+      "Guernsey",
+      "Guinea",
+      "Haiti",
+      "India",
+      "Italy",
+      "Ivory Coast",
+      "Jersey",
+      "Laos",
+      "Lebanon",
+      "Luxembourg",
+      "Madagascar",
+      "Mali",
+      "Mauritania",
+      "Mauritius",
+      "Monaco",
+      "Morocco",
+      "Niger",
+      "Republic of the Congo",
+      "Rwanda",
+      "Senegal",
+      "Seychelles",
+      "Switzerland",
+      "Togo",
+      "Tunisia",
+      "United States",
+      "Vanuatu",
+      "Vietnam"
+    ],
+    "ethnologueStatus": "3 Wider Communication",
+    "langLabel": "French",
+    "nativeNames": [
+      "français"
+    ],
+    "nativeSpeakers_k": 208157,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ind",
+    "iso1": "id",
+    "countries": [
+      "Indonesia"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Indonesian",
+    "nativeNames": [
+      "Bahasa Indonesia"
+    ],
+    "nativeSpeakers_k": 198996,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "rus",
+    "iso1": "ru",
+    "countries": [
+      "Russia"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Russian",
+    "nativeNames": [
+      "русский язык"
+    ],
+    "nativeSpeakers_k": 154000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Cyrillic script",
+      "Russian alphabet"
+    ]
+  },
+  {
+    "iso": "jpn",
+    "iso1": "ja",
+    "countries": [
+      "Australia",
+      "Japan",
+      "North Korea",
+      "Peru",
+      "Philippines",
+      "South Korea",
+      "Taiwan",
+      "United States"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Japanese",
+    "nativeNames": [
+      "日本語"
+    ],
+    "nativeSpeakers_k": 128000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "hiragana",
+      "kana",
+      "kanji",
+      "katakana"
+    ]
+  },
+  {
+    "iso": "pan",
+    "iso1": "pa",
+    "countries": [
+      "Afghanistan",
+      "Australia",
+      "Bangladesh",
+      "Canada",
+      "Fiji",
+      "India",
+      "Kenya",
+      "Malaysia",
+      "Pakistan",
+      "People's Republic of China",
+      "Saudi Arabia",
+      "Singapore",
+      "South Africa",
+      "Spain",
+      "Thailand",
+      "United Arab Emirates",
+      "United Kingdom",
+      "United States"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Punjabi",
+    "nativeNames": [
+      "پنجابی",
+      "ਪੰਜਾਬੀ"
+    ],
+    "nativeSpeakers_k": 125000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Gurmukhi",
+      "Shahmukhi",
+      "Urdu orthography"
+    ]
+  },
+  {
+    "iso": "fil",
+    "iso1": null,
+    "countries": [
+      "Philippines"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Filipino",
+    "nativeNames": [],
+    "nativeSpeakers_k": 90000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "mar",
+    "iso1": "mr",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Marathi",
+    "nativeNames": [
+      "मराठी"
+    ],
+    "nativeSpeakers_k": 83100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari",
+      "Modi"
+    ]
+  },
+  {
+    "iso": "swh",
+    "iso1": null,
+    "countries": [
+      "Burundi",
+      "Kenya",
+      "Mozambique",
+      "Somalia",
+      "Tanzania",
+      "Uganda"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Swahili",
+    "nativeNames": [
+      "kiswahili"
+    ],
+    "nativeSpeakers_k": 82300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "tur",
+    "iso1": "tr",
+    "countries": [
+      "Bulgaria",
+      "Cyprus",
+      "Greece",
+      "Northern Cyprus",
+      "Turkey"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Turkish",
+    "nativeNames": [
+      "Türkçe"
+    ],
+    "nativeSpeakers_k": 82231,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Turkish alphabet"
+    ]
+  },
+  {
+    "iso": "tel",
+    "iso1": "te",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Telugu",
+    "nativeNames": [
+      "తెలుగు"
+    ],
+    "nativeSpeakers_k": 82000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Telugu"
+    ]
+  },
+  {
+    "iso": "wuu",
+    "iso1": null,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Wu Chinese",
+    "nativeNames": [
+      "吳語",
+      "吴语"
+    ],
+    "nativeSpeakers_k": 81400,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters"
+    ]
+  },
+  {
+    "iso": "kor",
+    "iso1": "ko",
+    "countries": [
+      "Canada",
+      "Japan",
+      "Malaysia",
+      "North Korea",
+      "People's Republic of China",
+      "Russia",
+      "South Korea",
+      "United States"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Korean",
+    "nativeNames": [
+      "조선말",
+      "한국말",
+      "한국어"
+    ],
+    "nativeSpeakers_k": 77300,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Hangul",
+      "Hanja"
+    ]
+  },
+  {
+    "iso": "msa",
+    "iso1": "ms",
+    "countries": [
+      "Bahrain",
+      "Brunei",
+      "Egypt",
+      "Eritrea",
+      "Indonesia",
+      "Jordan",
+      "Lebanon",
+      "Malaysia",
+      "Mauritania",
+      "Morocco",
+      "Saudi Arabia",
+      "Singapore",
+      "South Sudan",
+      "Sudan",
+      "Syria",
+      "Thailand",
+      "Timor-Leste",
+      "Tunisia"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Malay",
+    "nativeNames": [
+      "Bahasa Melayu"
+    ],
+    "nativeSpeakers_k": 77000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Jawi",
+      "Latin script",
+      "Malay alphabet"
+    ]
+  },
+  {
+    "iso": "deu",
+    "iso1": "de",
+    "countries": [
+      "Austria",
+      "Belgium",
+      "Czech Republic",
+      "Denmark",
+      "France",
+      "Germany",
+      "Italy",
+      "Liechtenstein",
+      "Luxembourg",
+      "Poland",
+      "Russia",
+      "Switzerland"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "German",
+    "nativeNames": [
+      "Deutsch"
+    ],
+    "nativeSpeakers_k": 76540,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "German alphabet",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "vie",
+    "iso1": "vi",
+    "countries": [
+      "Vietnam"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Vietnamese",
+    "nativeNames": [
+      "Tiếng Việt",
+      "tiếng Việt"
+    ],
+    "nativeSpeakers_k": 76000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Latin script",
+      "Vietnamese Braille",
+      "Vietnamese alphabet",
+      "chữ Nôm"
+    ]
+  },
+  {
+    "iso": "tam",
+    "iso1": "ta",
+    "countries": [
+      "India",
+      "Indonesia",
+      "Kenya",
+      "Malaysia",
+      "Mauritius",
+      "Singapore",
+      "South Africa",
+      "Sri Lanka"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Tamil",
+    "nativeNames": [
+      "தமிழ்"
+    ],
+    "nativeSpeakers_k": 75000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Koleluttu",
+      "Tamil script",
+      "Vatteluttu"
+    ]
+  },
+  {
+    "iso": "yue",
+    "iso1": null,
+    "countries": [
+      "Brunei",
+      "Malaysia",
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Yue Chinese",
+    "nativeNames": [
+      "粤语",
+      "粵語"
+    ],
+    "nativeSpeakers_k": 73100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Cantonese Braille",
+      "Simplified Chinese",
+      "Traditional Chinese",
+      "written Cantonese"
+    ]
+  },
+  {
+    "iso": "urd",
+    "iso1": "ur",
+    "countries": [
+      "Canada",
+      "Fiji",
+      "India",
+      "Norway",
+      "Pakistan",
+      "United Kingdom",
+      "United States"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Urdu",
+    "nativeNames": [
+      "اردو"
+    ],
+    "nativeSpeakers_k": 68600,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Urdu orthography"
+    ]
+  },
+  {
+    "iso": "jav",
+    "iso1": "jv",
+    "countries": [
+      "Indonesia",
+      "Malaysia"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Javanese",
+    "nativeNames": [
+      "Basa Jawa",
+      "Jawa"
+    ],
+    "nativeSpeakers_k": 68300,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Formal Javanese Spelling",
+      "Javanese script",
+      "Kawi script",
+      "Latin script",
+      "Pegon alphabet"
+    ]
+  },
+  {
+    "iso": "ita",
+    "iso1": "it",
+    "countries": [
+      "Italy",
+      "San Marino",
+      "Switzerland",
+      "Vatican City"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Italian",
+    "nativeNames": [
+      "Italiano",
+      "italiano"
+    ],
+    "nativeSpeakers_k": 64800,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Italian alphabet",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "arz",
+    "iso1": null,
+    "countries": [
+      "Egypt"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Egyptian Arabic",
+    "nativeNames": [
+      "arz"
+    ],
+    "nativeSpeakers_k": 64600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script"
+    ]
+  },
+  {
+    "iso": "guj",
+    "iso1": "gu",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Gujarati",
+    "nativeNames": [
+      "ગુજરાતી"
+    ],
+    "nativeSpeakers_k": 56400,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Gujarati"
+    ]
+  },
+  {
+    "iso": "pes",
+    "iso1": null,
+    "countries": [
+      "Iran"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Iranian Persian",
+    "nativeNames": [],
+    "nativeSpeakers_k": 52800,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Persian alphabet"
+    ]
+  },
+  {
+    "iso": "bho",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Nepal"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Bhojpuri",
+    "nativeNames": [
+      "भोजपुरी",
+      "भोजपुरी भाषा"
+    ],
+    "nativeSpeakers_k": 52200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "nan",
+    "iso1": null,
+    "countries": [
+      "Brunei",
+      "Cambodia",
+      "Indonesia",
+      "Malaysia",
+      "People's Republic of China",
+      "Philippines",
+      "Singapore",
+      "Taiwan"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Southern Min",
+    "nativeNames": [
+      "Bân-lâm-gí",
+      "Bân-lâm-gú",
+      "閩南語",
+      "闽南语"
+    ],
+    "nativeSpeakers_k": 50100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters",
+      "Pe̍h-ōe-jī",
+      "Taiwanese Taigi Romanization System"
+    ]
+  },
+  {
+    "iso": "hak",
+    "iso1": null,
+    "countries": [
+      "Brunei",
+      "Indonesia",
+      "People's Republic of China",
+      "Taiwan"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Hakka Chinese",
+    "nativeNames": [
+      "Hak-fa",
+      "Hak-kâ-fa",
+      "Hak-kâ-ngî",
+      "Hak-kâ-va",
+      "Hak-va",
+      "客家話",
+      "客家话",
+      "客話",
+      "客话"
+    ],
+    "nativeSpeakers_k": 48200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters",
+      "Pe̍h-ōe-jī"
+    ]
+  },
+  {
+    "iso": "pcm",
+    "iso1": null,
+    "countries": [
+      "Nigeria"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Nigerian Pidgin",
+    "nativeNames": [
+      "pidgin"
+    ],
+    "nativeSpeakers_k": 47500,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "cjy",
+    "iso1": null,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Jin",
+    "nativeNames": [],
+    "nativeSpeakers_k": 46900,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters"
+    ]
+  },
+  {
+    "iso": "rom",
+    "iso1": null,
+    "countries": [
+      "Austria",
+      "Bosnia and Herzegovina",
+      "Colombia",
+      "Denmark",
+      "Finland",
+      "Germany",
+      "Hungary",
+      "Kosovo",
+      "Montenegro",
+      "North Macedonia",
+      "Norway",
+      "Poland",
+      "Romania",
+      "Serbia",
+      "Slovakia",
+      "Sweden"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Romani",
+    "nativeNames": [
+      "Romani chib"
+    ],
+    "nativeSpeakers_k": 46000,
+    "unescoStatus": "definitely endangered",
+    "writingSystems": [
+      "Cyrillic script",
+      "Devanagari",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "fas",
+    "iso1": "fa",
+    "countries": [
+      "Afghanistan",
+      "Bahrain",
+      "Iran",
+      "Iraq",
+      "Kuwait",
+      "Pakistan",
+      "Russia",
+      "Tajikistan",
+      "United Arab Emirates",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Persian",
+    "nativeNames": [
+      "فارسی"
+    ],
+    "nativeSpeakers_k": 45000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Arabic script",
+      "Persian alphabet"
+    ]
+  },
+  {
+    "iso": "apc",
+    "iso1": null,
+    "countries": [
+      "Israel",
+      "Jordan",
+      "Lebanon",
+      "Palestine",
+      "Syria",
+      "Turkey"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Levantine Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 44000,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Hebrew alphabet",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hau",
+    "iso1": "ha",
+    "countries": [
+      "Benin",
+      "Burkina Faso",
+      "Cameroon",
+      "Chad",
+      "Ghana",
+      "Niger",
+      "Nigeria",
+      "Togo"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Hausa",
+    "nativeNames": [
+      "Hausa"
+    ],
+    "nativeSpeakers_k": 43900,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "kan",
+    "iso1": "kn",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Kannada",
+    "nativeNames": [
+      "ಕನ್ನಡ"
+    ],
+    "nativeSpeakers_k": 43600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Kannada script"
+    ]
+  },
+  {
+    "iso": "arq",
+    "iso1": null,
+    "countries": [
+      "Algeria"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Algerian Arabic",
+    "nativeNames": [
+      "الجزائرية",
+      "العامية",
+      "دريرية"
+    ],
+    "nativeSpeakers_k": 42252,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Arabic script"
+    ]
+  },
+  {
+    "iso": "pol",
+    "iso1": "pl",
+    "countries": [
+      "Poland"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Polish",
+    "nativeNames": [
+      "język polski",
+      "polszczyzna"
+    ],
+    "nativeSpeakers_k": 39700,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "pus",
+    "iso1": "ps",
+    "countries": [
+      "Afghanistan",
+      "Balochistan",
+      "Canada",
+      "India",
+      "Iran",
+      "Pakistan",
+      "Tajikistan",
+      "Turkmenistan",
+      "United Arab Emirates",
+      "United States"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Pashto",
+    "nativeNames": [
+      "پښتو ژبه"
+    ],
+    "nativeSpeakers_k": 39000,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Arabic script"
+    ]
+  },
+  {
+    "iso": "yor",
+    "iso1": "yo",
+    "countries": [
+      "Benin",
+      "Nigeria",
+      "Togo"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Yoruba",
+    "nativeNames": [
+      "Yorùbá",
+      "Èdè Yorùbá"
+    ],
+    "nativeSpeakers_k": 37800,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hsn",
+    "iso1": null,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Xiang Chinese",
+    "nativeNames": [],
+    "nativeSpeakers_k": 37300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters"
+    ]
+  },
+  {
+    "iso": "mal",
+    "iso1": "ml",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Malayalam",
+    "nativeNames": [
+      "മലയാളം"
+    ],
+    "nativeSpeakers_k": 37100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabi Malayalam script",
+      "Malayalam script"
+    ]
+  },
+  {
+    "iso": "raj",
+    "iso1": null,
+    "countries": [],
+    "ethnologueStatus": null,
+    "langLabel": "Rajasthani",
+    "nativeNames": [],
+    "nativeSpeakers_k": 36000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "ory",
+    "iso1": "or",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Odia",
+    "nativeNames": [
+      "ଓଡ଼ିଆ",
+      "ଓଡ଼ିଆ ଭାଷା"
+    ],
+    "nativeSpeakers_k": 34500,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Odia"
+    ]
+  },
+  {
+    "iso": "mai",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Nepal"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Maithili",
+    "nativeNames": [
+      "मैथिली"
+    ],
+    "nativeSpeakers_k": 33900,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari",
+      "Kaithi",
+      "Tirhuta"
+    ]
+  },
+  {
+    "iso": "mya",
+    "iso1": "my",
+    "countries": [
+      "Myanmar"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Burmese",
+    "nativeNames": [
+      "မြန်မာဘာသာ",
+      "မြန်မာဘာသာစကား"
+    ],
+    "nativeSpeakers_k": 32900,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Burmese alphabet",
+      "Mon–Burmese script"
+    ]
+  },
+  {
+    "iso": "sun",
+    "iso1": "su",
+    "countries": [
+      "Indonesia",
+      "Malaysia"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Sundanese",
+    "nativeNames": [
+      "Bahasa Sunda",
+      "Basa Sunda",
+      "Sunda",
+      "bahasa Sunda"
+    ],
+    "nativeSpeakers_k": 32400,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Sundanese script"
+    ]
+  },
+  {
+    "iso": "apd",
+    "iso1": null,
+    "countries": [
+      "South Sudan",
+      "Sudan"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Sudanese Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 31900,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "ary",
+    "iso1": null,
+    "countries": [
+      "Algeria",
+      "Morocco",
+      "Western Sahara"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Moroccan Arabic",
+    "nativeNames": [
+      "الداريجة"
+    ],
+    "nativeSpeakers_k": 27500,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Arabic script"
+    ]
+  },
+  {
+    "iso": "ibo",
+    "iso1": "ig",
+    "countries": [
+      "Nigeria"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Igbo",
+    "nativeNames": [
+      "Asụsụ Igbo",
+      "Igbo"
+    ],
+    "nativeSpeakers_k": 27000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Igbo alphabet"
+    ]
+  },
+  {
+    "iso": "uzb",
+    "iso1": "uz",
+    "countries": [
+      "Afghanistan",
+      "Kazakhstan",
+      "Kyrgyzstan",
+      "People's Republic of China",
+      "Russia",
+      "Tajikistan",
+      "Turkey",
+      "Turkmenistan",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Uzbek",
+    "nativeNames": [
+      "Oʻzbek tili",
+      "Ўзбек тили",
+      "ئۇزبېك تیلى"
+    ],
+    "nativeSpeakers_k": 27000,
+    "rtl": true,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Arabic alphabet",
+      "Cyrillic script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ukr",
+    "iso1": "uk",
+    "countries": [
+      "Belarus",
+      "Canada",
+      "Czech Republic",
+      "Hungary",
+      "Kazakhstan",
+      "Moldova",
+      "Poland",
+      "Romania",
+      "Russia",
+      "Serbia",
+      "Slovakia",
+      "Ukraine",
+      "United States"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Ukrainian",
+    "nativeNames": [
+      "українська мова"
+    ],
+    "nativeSpeakers_k": 26900,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Cyrillic script"
+    ]
+  },
+  {
+    "iso": "uzn",
+    "iso1": null,
+    "countries": [
+      "Tajikistan",
+      "Turkmenistan",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Northern Uzbek",
+    "nativeNames": [],
+    "nativeSpeakers_k": 25100,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "apc",
+    "iso1": null,
+    "countries": [
+      "Lebanon",
+      "Palestine",
+      "Syria",
+      "Turkey"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "North Levantine Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 24600,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "snd",
+    "iso1": "sd",
+    "countries": [
+      "India",
+      "Pakistan"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Sindhi",
+    "nativeNames": [
+      "سِنڌِي",
+      "सिंधी",
+      "સિંધી"
+    ],
+    "nativeSpeakers_k": 24600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari Sindhi",
+      "Gujarati",
+      "Khojki",
+      "Khudabadi",
+      "Sindhi Perso-Arabic script"
+    ]
+  },
+  {
+    "iso": "ron",
+    "iso1": "ro",
+    "countries": [
+      "Moldova",
+      "Romania",
+      "Serbia",
+      "Ukraine"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Romanian",
+    "nativeNames": [
+      "limba română",
+      "românește"
+    ],
+    "nativeSpeakers_k": 24300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ful",
+    "iso1": "ff",
+    "countries": [],
+    "ethnologueStatus": null,
+    "langLabel": "Fula",
+    "nativeNames": [
+      "Fulfulde",
+      "𞤆𞤵𞤤𞤢𞤪"
+    ],
+    "nativeSpeakers_k": 24000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Adlam",
+      "Ajami script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "orm",
+    "iso1": "om",
+    "countries": [
+      "Ethiopia",
+      "Kenya",
+      "Somalia"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Oromo",
+    "nativeNames": [
+      "Afaan Oromoo"
+    ],
+    "nativeSpeakers_k": 24000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Geʽez script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "tgl",
+    "iso1": "tl",
+    "countries": [
+      "Philippines"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Tagalog",
+    "nativeNames": [
+      "wikang Tagalog"
+    ],
+    "nativeSpeakers_k": 23600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Abakada alphabet",
+      "Baybayin",
+      "Filipino alphabet",
+      "Latin script",
+      "Philippine Braille"
+    ]
+  },
+  {
+    "iso": "nld",
+    "iso1": "nl",
+    "countries": [
+      "Aruba",
+      "Belgium",
+      "Caribbean Netherlands",
+      "Curaçao",
+      "France",
+      "Germany",
+      "Kingdom of the Netherlands",
+      "Netherlands",
+      "Sint Maarten",
+      "Suriname"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Dutch",
+    "nativeNames": [
+      "Hollands",
+      "Nederlands",
+      "Vlaams"
+    ],
+    "nativeSpeakers_k": 23100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "aze",
+    "iso1": "az",
+    "countries": [
+      "Afghanistan",
+      "Armenia",
+      "Azerbaijan",
+      "Georgia",
+      "Germany",
+      "Iran",
+      "Iraq",
+      "Kazakhstan",
+      "Kyrgyzstan",
+      "Russia",
+      "Syria",
+      "Turkey",
+      "Turkmenistan",
+      "Ukraine",
+      "United States",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Azerbaijani",
+    "nativeNames": [
+      "Azərbaycan dili"
+    ],
+    "nativeSpeakers_k": 23000,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Cyrillic script",
+      "Latin script",
+      "Persian alphabet"
+    ]
+  },
+  {
+    "iso": "aec",
+    "iso1": null,
+    "countries": [
+      "Egypt"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Saʽidi Arabic",
+    "nativeNames": [
+      "صعيدي"
+    ],
+    "nativeSpeakers_k": 22400,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "gan",
+    "iso1": null,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Gan Chinese",
+    "nativeNames": [
+      "Jiangxi hua",
+      "贛語"
+    ],
+    "nativeSpeakers_k": 22100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters"
+    ]
+  },
+  {
+    "iso": "awa",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Nepal"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Awadhi",
+    "nativeNames": [
+      "अवधी"
+    ],
+    "nativeSpeakers_k": 22000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "amh",
+    "iso1": "am",
+    "countries": [
+      "Eritrea",
+      "Ethiopia",
+      "Israel",
+      "Somalia",
+      "Sudan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Amharic",
+    "nativeNames": [
+      "አማርኛ"
+    ],
+    "nativeSpeakers_k": 21900,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Geʽez script"
+    ]
+  },
+  {
+    "iso": "kur",
+    "iso1": "ku",
+    "countries": [
+      "Armenia",
+      "Azerbaijan",
+      "Georgia",
+      "Iran",
+      "Iraq",
+      "Syria",
+      "Turkey",
+      "Turkmenistan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Kurdish",
+    "nativeNames": [
+      "Kurdî",
+      "Zimanê Kurdî",
+      "زمانی کوردی",
+      "کوردی"
+    ],
+    "nativeSpeakers_k": 21000,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Cyrillic script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "pbu",
+    "iso1": null,
+    "countries": [
+      "Afghanistan",
+      "Pakistan"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Northern Pashto",
+    "nativeNames": [],
+    "nativeSpeakers_k": 20900,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "mag",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Magahi",
+    "nativeNames": [
+      "मगही"
+    ],
+    "nativeSpeakers_k": 20700,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "tha",
+    "iso1": "th",
+    "countries": [
+      "Cambodia",
+      "Malaysia",
+      "Myanmar",
+      "Thailand"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Thai",
+    "nativeNames": [
+      "ภาษาไทย"
+    ],
+    "nativeSpeakers_k": 20700,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Thai alphabet",
+      "romanization of Thai"
+    ]
+  },
+  {
+    "iso": "skr",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Pakistan",
+      "Saudi Arabia",
+      "United Arab Emirates"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Saraiki",
+    "nativeNames": [
+      "سرائیکی"
+    ],
+    "nativeSpeakers_k": 20009,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Saraiki Shahmukhi"
+    ]
+  },
+  {
+    "iso": "lin",
+    "iso1": "ln",
+    "countries": [
+      "Democratic Republic of the Congo",
+      "Republic of the Congo"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Lingala",
+    "nativeNames": [
+      "Lingala",
+      "Lingála"
+    ],
+    "nativeSpeakers_k": 20000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hbs",
+    "iso1": "sh",
+    "countries": [
+      "Bosnia and Herzegovina",
+      "Croatia",
+      "Montenegro",
+      "Serbia"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Serbo-Croatian",
+    "nativeNames": [
+      "hrvatskosrpski",
+      "hrvatskosrpski jezik",
+      "srpskohrvatski",
+      "srpskohrvatski jezik",
+      "српскохрватски",
+      "српскохрватски језик",
+      "хрватскосрпски",
+      "хрватскосрпски језик"
+    ],
+    "nativeSpeakers_k": 19000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Cyrillic script",
+      "Gaj's Latin alphabet",
+      "Latin script",
+      "Serbian Cyrillic alphabet"
+    ]
+  },
+  {
+    "iso": "mlg",
+    "iso1": "mg",
+    "countries": [
+      "Madagascar"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Malagasy",
+    "nativeNames": [
+      "Fiteny malagasy"
+    ],
+    "nativeSpeakers_k": 18000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Sorabe alphabet"
+    ]
+  },
+  {
+    "iso": "khm",
+    "iso1": "km",
+    "countries": [
+      "Cambodia",
+      "Vietnam"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Khmer",
+    "nativeNames": [
+      "ខ្មែរ",
+      "ភាសាខ្មែរ"
+    ],
+    "nativeSpeakers_k": 16600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Khmer"
+    ]
+  },
+  {
+    "iso": "hne",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Chhattisgarhi",
+    "nativeNames": [],
+    "nativeSpeakers_k": 16300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "som",
+    "iso1": "so",
+    "countries": [
+      "Djibouti",
+      "Ethiopia",
+      "Kenya",
+      "Somalia",
+      "Somaliland"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Somali",
+    "nativeNames": [
+      "Af-Soomaali",
+      "اف صومالِ",
+      "𐒖𐒍 𐒈𐒝𐒑𐒛𐒐𐒘"
+    ],
+    "nativeSpeakers_k": 16200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Osmanya",
+      "Wadaad's writing"
+    ]
+  },
+  {
+    "iso": "tuk",
+    "iso1": "tk",
+    "countries": [
+      "Afghanistan",
+      "Iran",
+      "Pakistan",
+      "Tajikistan",
+      "Turkmenistan",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Turkmen",
+    "nativeNames": [
+      "Türkmen",
+      "Türkmençe",
+      "түркменче",
+      "تۆرکمنچه"
+    ],
+    "nativeSpeakers_k": 16000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Cyrillic script",
+      "Latin script",
+      "Perso-Arabic script",
+      "Russian Braille",
+      "Turkmen alphabet"
+    ]
+  },
+  {
+    "iso": "zha",
+    "iso1": "za",
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Zhuang",
+    "nativeNames": [
+      "Vahcuengh"
+    ],
+    "nativeSpeakers_k": 16000,
+    "writingSystems": [
+      "Latin script",
+      "Sawndip"
+    ]
+  },
+  {
+    "iso": "ceb",
+    "iso1": null,
+    "countries": [
+      "Philippines"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Cebuano",
+    "nativeNames": [
+      "Sinugboanon"
+    ],
+    "nativeSpeakers_k": 15900,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Filipino alphabet"
+    ]
+  },
+  {
+    "iso": "nep",
+    "iso1": "ne",
+    "countries": [
+      "Bhutan",
+      "India",
+      "Myanmar",
+      "Nepal"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Nepali",
+    "nativeNames": [
+      "नेपाली"
+    ],
+    "nativeSpeakers_k": 15800,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "acm",
+    "iso1": null,
+    "countries": [
+      "Iran",
+      "Iraq",
+      "Syria"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Mesopotamian Arabic",
+    "nativeNames": [
+      "لهجة عراقية"
+    ],
+    "nativeSpeakers_k": 15700,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "swa",
+    "iso1": "sw",
+    "countries": [
+      "Democratic Republic of the Congo",
+      "Kenya",
+      "Rwanda",
+      "Tanzania",
+      "Uganda"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Swahili",
+    "nativeNames": [
+      "Kiswahili",
+      "كِسْوَحِيلِ"
+    ],
+    "nativeSpeakers_k": 15437,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Swahili Ajami"
+    ]
+  },
+  {
+    "iso": "asm",
+    "iso1": "as",
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Assamese",
+    "nativeNames": [
+      "অসমীয়া",
+      "অসমীয়া ভাষা"
+    ],
+    "nativeSpeakers_k": 15300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Assamese alphabet"
+    ]
+  },
+  {
+    "iso": "sin",
+    "iso1": "si",
+    "countries": [
+      "Sri Lanka"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Sinhala",
+    "nativeNames": [
+      "සිංහල",
+      "සිංහල භාෂාව"
+    ],
+    "nativeSpeakers_k": 15300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Sinhala"
+    ]
+  },
+  {
+    "iso": "ell",
+    "iso1": "el",
+    "countries": [
+      "Albania",
+      "Cyprus",
+      "Greece"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Modern Greek",
+    "nativeNames": [
+      "Ελληνικά",
+      "ελληνικά",
+      "νέα ελληνικά"
+    ],
+    "nativeSpeakers_k": 15000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Greek alphabet"
+    ]
+  },
+  {
+    "iso": "kau",
+    "iso1": "kr",
+    "countries": [
+      "Cameroon",
+      "Chad",
+      "Libya",
+      "Niger",
+      "Nigeria",
+      "Sudan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Kanuri",
+    "nativeNames": [
+      "kanuri"
+    ],
+    "nativeSpeakers_k": 15000,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "mad",
+    "iso1": null,
+    "countries": [
+      "Indonesia",
+      "Malaysia",
+      "Saudi Arabia",
+      "Singapore"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Madurese",
+    "nativeNames": [
+      "Bhâsa Madhurâ",
+      "ꦧꦱꦩꦢꦸꦫ"
+    ],
+    "nativeSpeakers_k": 15000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Javanese script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "tts",
+    "iso1": null,
+    "countries": [
+      "Thailand"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Isan",
+    "nativeNames": [],
+    "nativeSpeakers_k": 15000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Thai alphabet"
+    ]
+  },
+  {
+    "iso": "kmr",
+    "iso1": null,
+    "countries": [
+      "Armenia",
+      "Azerbaijan",
+      "Iran",
+      "Iraq",
+      "Syria",
+      "Turkey"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Kurmanji",
+    "nativeNames": [
+      "Kurdî",
+      "Kurmancî",
+      "Zimanê Kurdî"
+    ],
+    "nativeSpeakers_k": 14600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Cyrillic script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "acw",
+    "iso1": null,
+    "countries": [
+      "Saudi Arabia"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Hijazi Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 14500,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "fuv",
+    "iso1": null,
+    "countries": [
+      "Nigeria"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Nigerian Fulfulde",
+    "nativeNames": [],
+    "nativeSpeakers_k": 14500,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "bar",
+    "iso1": null,
+    "countries": [
+      "Austria",
+      "Germany"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Bavarian",
+    "nativeNames": [
+      "Boarisch"
+    ],
+    "nativeSpeakers_k": 14100,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "bgc",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Pakistan"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Haryanvi",
+    "nativeNames": [
+      "ہریاݨوی",
+      "हरियाणवी"
+    ],
+    "nativeSpeakers_k": 14000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari",
+      "Urdu orthography"
+    ]
+  },
+  {
+    "iso": "mwr",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Nepal",
+      "Pakistan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Marwari",
+    "nativeNames": [
+      "مارواڑی",
+      "मारवाड़ी"
+    ],
+    "nativeSpeakers_k": 14000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "tgk",
+    "iso1": "tg",
+    "countries": [
+      "Afghanistan",
+      "Tajikistan",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Tajik",
+    "nativeNames": [
+      "toçikī",
+      "zaboni toçikī",
+      "забони тоҷикӣ",
+      "забони форсии тоҷикӣ",
+      "тоҷикӣ",
+      "форсии тоҷикӣ",
+      "تاجیکی",
+      "زبان تاجیکی"
+    ],
+    "nativeSpeakers_k": 14000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Cyrillic script",
+      "Hebrew alphabet",
+      "Latin script",
+      "Persian alphabet",
+      "Tajik Cyrillic alphabet"
+    ]
+  },
+  {
+    "iso": "syl",
+    "iso1": null,
+    "countries": [
+      "Australia",
+      "Bahrain",
+      "Bangladesh",
+      "Canada",
+      "India",
+      "Italy",
+      "Kuwait",
+      "Malaysia",
+      "Myanmar",
+      "Oman",
+      "Qatar",
+      "Saudi Arabia",
+      "Singapore",
+      "United Arab Emirates",
+      "United Kingdom",
+      "United States"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Sylheti",
+    "nativeNames": [
+      "ꠍꠤꠟꠐꠤ ꠝꠣꠔ",
+      "ꠘꠣꠉꠞꠤ ꠜꠣꠡꠣ"
+    ],
+    "nativeSpeakers_k": 13980,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Bangla–Assamese script",
+      "Devanagari",
+      "Latin script",
+      "Sylheti"
+    ]
+  },
+  {
+    "iso": "azb",
+    "iso1": null,
+    "countries": [
+      "Iran",
+      "Turkey"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "South Azerbaijani",
+    "nativeNames": [
+      "آذربایجان دیلی",
+      "آذربایجانجا",
+      "تۆرکجه"
+    ],
+    "nativeSpeakers_k": 13800,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "ctg",
+    "iso1": null,
+    "countries": [
+      "Bangladesh"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Chittagonian",
+    "nativeNames": [],
+    "nativeSpeakers_k": 13000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Bangla alphabet"
+    ]
+  },
+  {
+    "iso": "tso",
+    "iso1": "ts",
+    "countries": [
+      "Eswatini",
+      "Mozambique",
+      "South Africa",
+      "Zimbabwe"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Tsonga",
+    "nativeNames": [
+      "Tsonga",
+      "Xitsonga"
+    ],
+    "nativeSpeakers_k": 13000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "kaz",
+    "iso1": "kk",
+    "countries": [
+      "Azerbaijan",
+      "Germany",
+      "Iran",
+      "Kazakhstan",
+      "Kyrgyzstan",
+      "Mongolia",
+      "People's Republic of China",
+      "Russia",
+      "Turkey",
+      "Turkmenistan",
+      "Ukraine",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Kazakh",
+    "nativeNames": [
+      "Qazaq tılı",
+      "қазақ тілі",
+      "қазақша",
+      "قازاق ٴتىلى"
+    ],
+    "nativeSpeakers_k": 12900,
+    "rtl": true,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Arabic alphabet",
+      "Cyrillic script",
+      "Kazakh Braille",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hun",
+    "iso1": "hu",
+    "countries": [
+      "Austria",
+      "Croatia",
+      "Hungary",
+      "Romania",
+      "Serbia",
+      "Slovakia",
+      "Slovenia",
+      "Ukraine"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Hungarian",
+    "nativeNames": [
+      "magyar",
+      "magyar nyelv"
+    ],
+    "nativeSpeakers_k": 12600,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Hungarian alphabet",
+      "Latin script",
+      "Old Hungarian"
+    ]
+  },
+  {
+    "iso": "kin",
+    "iso1": "rw",
+    "countries": [
+      "Democratic Republic of the Congo",
+      "Rwanda",
+      "Uganda"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Kinyarwanda",
+    "nativeNames": [
+      "Ikinyarwanda",
+      "Kinyarwanda"
+    ],
+    "nativeSpeakers_k": 12100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "zul",
+    "iso1": "zu",
+    "countries": [
+      "Lesotho",
+      "Mozambique",
+      "South Africa"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Zulu",
+    "nativeNames": [
+      "isiZulu"
+    ],
+    "nativeSpeakers_k": 12100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "nya",
+    "iso1": "ny",
+    "countries": [
+      "Malawi",
+      "Mozambique",
+      "Zambia"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Chewa",
+    "nativeNames": [
+      "Chicheŵa",
+      "Chilankhulo cha Chichewa"
+    ],
+    "nativeSpeakers_k": 12000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "aeb",
+    "iso1": null,
+    "countries": [
+      "Tunisia"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Tunisian Arabic",
+    "nativeNames": [
+      "Dèrja Tounsiyya",
+      "Tounsi",
+      "تونسي",
+      "دارجة تونسية"
+    ],
+    "nativeSpeakers_k": 11600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic chat alphabet",
+      "Arabic script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ajp",
+    "iso1": null,
+    "countries": [
+      "Israel",
+      "Jordan",
+      "Palestine"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "South Levantine Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 11600,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "ayn",
+    "iso1": null,
+    "countries": [
+      "Yemen"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Sanʽani Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 11400,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "aka",
+    "iso1": "ak",
+    "countries": [
+      "Ghana",
+      "Ivory Coast"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Akan",
+    "nativeNames": [
+      "Akan",
+      "akan"
+    ],
+    "nativeSpeakers_k": 11000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "mnp",
+    "iso1": null,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Northern Min",
+    "nativeNames": [],
+    "nativeSpeakers_k": 11000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "pbt",
+    "iso1": null,
+    "countries": [
+      "Afghanistan",
+      "Iran",
+      "Pakistan",
+      "Tajikistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Southern Pashto",
+    "nativeNames": [],
+    "nativeSpeakers_k": 10900,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "run",
+    "iso1": "rn",
+    "countries": [
+      "Burundi",
+      "Democratic Republic of the Congo",
+      "Tanzania",
+      "Uganda"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Kirundi",
+    "nativeNames": [
+      "Ikirundi"
+    ],
+    "nativeSpeakers_k": 10800,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ces",
+    "iso1": "cs",
+    "countries": [
+      "Czech Republic"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Czech",
+    "nativeNames": [
+      "český jazyk",
+      "čeština"
+    ],
+    "nativeSpeakers_k": 10700,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Czech alphabet"
+    ]
+  },
+  {
+    "iso": "acq",
+    "iso1": null,
+    "countries": [
+      "Djibouti",
+      "Yemen"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Taʽizzi-Adeni Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 10500,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "uig",
+    "iso1": "ug",
+    "countries": [
+      "Afghanistan",
+      "Albania",
+      "Kazakhstan",
+      "Kyrgyzstan",
+      "Mongolia",
+      "People's Republic of China",
+      "Turkey",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Uyghur",
+    "nativeNames": [
+      "ئۇيغۇر",
+      "ئۇيغۇر تىلى",
+      "ئۇيغۇرچە"
+    ],
+    "nativeSpeakers_k": 10400,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Cyrillic script",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "afr",
+    "iso1": "af",
+    "countries": [
+      "Botswana",
+      "Namibia",
+      "South Africa",
+      "Zambia",
+      "Zimbabwe"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Afrikaans",
+    "nativeNames": [
+      "Afrikaans"
+    ],
+    "nativeSpeakers_k": 10300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "cdo",
+    "iso1": null,
+    "countries": [
+      "Brunei",
+      "Japan",
+      "Malaysia",
+      "People's Republic of China",
+      "Taiwan"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Eastern Min",
+    "nativeNames": [
+      "Bàng-uâ",
+      "Mìng-dĕ̤ng-ngṳ̄",
+      "Mìng-dĕ̤ng-uâ",
+      "平話",
+      "閩東話",
+      "閩東語",
+      "闽东话"
+    ],
+    "nativeSpeakers_k": 10300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Chinese characters",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "gsw",
+    "iso1": null,
+    "countries": [
+      "Austria",
+      "France",
+      "Germany",
+      "Italy",
+      "Liechtenstein",
+      "Switzerland",
+      "Venezuela"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Alemannic",
+    "nativeNames": [
+      "Alemannisch",
+      "Schwyzerdütsch"
+    ],
+    "nativeSpeakers_k": 10000,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "mup",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Malvi",
+    "nativeNames": [],
+    "nativeSpeakers_k": 10000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "dhd",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Dhundari",
+    "nativeNames": [],
+    "nativeSpeakers_k": 9600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "hat",
+    "iso1": "ht",
+    "countries": [
+      "Haiti"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Haitian Creole",
+    "nativeNames": [
+      "Kreyòl ayisyen"
+    ],
+    "nativeSpeakers_k": 9600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "prs",
+    "iso1": null,
+    "countries": [
+      "Afghanistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Dari",
+    "nativeNames": [
+      "دری"
+    ],
+    "nativeSpeakers_k": 9600,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Arabic script",
+      "Persian alphabet"
+    ]
+  },
+  {
+    "iso": "heb",
+    "iso1": "he",
+    "countries": [
+      "Israel"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Hebrew",
+    "nativeNames": [
+      "עברית",
+      "עברית חדשה"
+    ],
+    "nativeSpeakers_k": 9303,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Hebrew alphabet"
+    ]
+  },
+  {
+    "iso": "swe",
+    "iso1": "sv",
+    "countries": [
+      "Finland",
+      "Sweden",
+      "Åland"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Swedish",
+    "nativeNames": [
+      "svenska"
+    ],
+    "nativeSpeakers_k": 9244,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Swedish alphabet"
+    ]
+  },
+  {
+    "iso": "azj",
+    "iso1": null,
+    "countries": [
+      "Armenia",
+      "Azerbaijan",
+      "Georgia"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "North Azerbaijani",
+    "nativeNames": [],
+    "nativeSpeakers_k": 9220,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "ilo",
+    "iso1": null,
+    "countries": [
+      "Philippines"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Ilocano",
+    "nativeNames": [
+      "Ilokano",
+      "Pagsasao nga Ilokano"
+    ],
+    "nativeSpeakers_k": 9100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "swc",
+    "iso1": null,
+    "countries": [
+      "Democratic Republic of the Congo",
+      "Zambia"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Congo Swahili",
+    "nativeNames": [],
+    "nativeSpeakers_k": 9100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "bul",
+    "iso1": "bg",
+    "countries": [
+      "Albania",
+      "Bulgaria",
+      "Greece",
+      "Moldova",
+      "North Macedonia",
+      "Romania",
+      "Russia",
+      "Serbia",
+      "Turkey",
+      "Ukraine"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Bulgarian",
+    "nativeNames": [
+      "български език"
+    ],
+    "nativeSpeakers_k": 9000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Bulgarian Braille",
+      "Bulgarian alphabet",
+      "Cyrillic script"
+    ]
+  },
+  {
+    "iso": "srp",
+    "iso1": "sr",
+    "countries": [
+      "Bosnia and Herzegovina",
+      "Croatia",
+      "Kosovo",
+      "Montenegro",
+      "North Macedonia",
+      "Serbia"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Serbian",
+    "nativeNames": [
+      "srpski jezik",
+      "српски",
+      "српски језик"
+    ],
+    "nativeSpeakers_k": 9000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Gaj's Latin alphabet",
+      "Serbian Cyrillic alphabet"
+    ]
+  },
+  {
+    "iso": "que",
+    "iso1": "qu",
+    "countries": [],
+    "ethnologueStatus": null,
+    "langLabel": "Quechua",
+    "nativeNames": [
+      "Qhichwa simi"
+    ],
+    "nativeSpeakers_k": 8900,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hmn",
+    "iso1": null,
+    "countries": [
+      "Laos",
+      "People's Republic of China",
+      "Thailand",
+      "United States",
+      "Vietnam"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Hmong",
+    "nativeNames": [],
+    "nativeSpeakers_k": 8400,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Nyiakeng Puachue Hmong",
+      "Pahawh Hmong"
+    ]
+  },
+  {
+    "iso": "sna",
+    "iso1": "sn",
+    "countries": [
+      "Botswana",
+      "Mozambique",
+      "Zambia",
+      "Zimbabwe"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Shona",
+    "nativeNames": [
+      "ChiShona",
+      "Chishona"
+    ],
+    "nativeSpeakers_k": 8300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "hil",
+    "iso1": null,
+    "countries": [
+      "Philippines"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Hiligaynon",
+    "nativeNames": [
+      "Hiligaynon"
+    ],
+    "nativeSpeakers_k": 8200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Filipino alphabet"
+    ]
+  },
+  {
+    "iso": "xho",
+    "iso1": "xh",
+    "countries": [
+      "Lesotho",
+      "South Africa",
+      "Zimbabwe"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Xhosa",
+    "nativeNames": [
+      "IsiXhosa"
+    ],
+    "nativeSpeakers_k": 8177,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "bfy",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Bagheli",
+    "nativeNames": [],
+    "nativeSpeakers_k": 8000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "shi",
+    "iso1": null,
+    "countries": [
+      "Morocco"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Tachelhit",
+    "nativeNames": [
+      "Taclḥit",
+      "تشلحيت",
+      "ⵜⴰⵛⵍⵃⵉⵜ"
+    ],
+    "nativeSpeakers_k": 8000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Latin script",
+      "Tifinagh"
+    ]
+  },
+  {
+    "iso": "rwr",
+    "iso1": null,
+    "countries": [
+      "India",
+      "Nepal"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Marwari",
+    "nativeNames": [],
+    "nativeSpeakers_k": 7856,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "bal",
+    "iso1": null,
+    "countries": [
+      "Afghanistan",
+      "Iran",
+      "Pakistan"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Balochi",
+    "nativeNames": [
+      "Balóchí",
+      "Балочи",
+      "بلوچی",
+      "بلۆچی",
+      "بلۏچی",
+      "بَلوچِي"
+    ],
+    "nativeSpeakers_k": 7600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Balochi Cyrillic Alphabet",
+      "Balochi Roman Orthography",
+      "Balochi Standard Orthography",
+      "Old Balochi Orthography"
+    ]
+  },
+  {
+    "iso": "bel",
+    "iso1": "be",
+    "countries": [
+      "Belarus",
+      "Canada",
+      "Latvia",
+      "Lithuania",
+      "Poland",
+      "Russia",
+      "Ukraine",
+      "United States"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Belarusian",
+    "nativeNames": [
+      "беларуская мова"
+    ],
+    "nativeSpeakers_k": 7600,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Belarusian Cyrillic alphabet"
+    ]
+  },
+  {
+    "iso": "mos",
+    "iso1": null,
+    "countries": [
+      "Burkina Faso",
+      "Ghana",
+      "Mali",
+      "Togo"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Mooré",
+    "nativeNames": [],
+    "nativeSpeakers_k": 7600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "tir",
+    "iso1": "ti",
+    "countries": [
+      "Eritrea",
+      "Ethiopia"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Tigrinya",
+    "nativeNames": [
+      "ትግርኛ"
+    ],
+    "nativeSpeakers_k": 7507,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Geʽez script"
+    ]
+  },
+  {
+    "iso": "nap",
+    "iso1": null,
+    "countries": [
+      "Italy"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Neapolitan",
+    "nativeNames": [
+      "Lengua napulitana"
+    ],
+    "nativeSpeakers_k": 7500,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "vmw",
+    "iso1": null,
+    "countries": [
+      "Mozambique",
+      "Tanzania"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Makhuwa",
+    "nativeNames": [],
+    "nativeSpeakers_k": 7430,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "kok",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Konkani",
+    "nativeNames": [],
+    "nativeSpeakers_k": 7400,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Devanagari",
+      "Kannada script",
+      "Latin script",
+      "Malayalam script"
+    ]
+  },
+  {
+    "iso": "ckb",
+    "iso1": null,
+    "countries": [
+      "Iran",
+      "Iraq"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Sorani",
+    "nativeNames": [
+      "سۆرانی",
+      "کوردی",
+      "کوردیی ناوەندی"
+    ],
+    "nativeSpeakers_k": 7250,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Arabic script",
+      "Kurdish Arabic alphabet",
+      "Kurdish alphabets"
+    ]
+  },
+  {
+    "iso": "sat",
+    "iso1": null,
+    "countries": [
+      "Bangladesh",
+      "Bhutan",
+      "India",
+      "Nepal"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Santali",
+    "nativeNames": [
+      "Santali",
+      "संथाली भाषा",
+      "सन्थाली भाषा",
+      "চাঁওতালি",
+      "সাঁওতালি",
+      "ਸੰਥਾਲੀ ਭਾਸ਼ਾ",
+      "ସାନ୍ତାଳୀ ଭାଷା",
+      "சந்தாளி மொழி",
+      "సంతాలి భాష",
+      "ᱥᱟᱱᱛᱟᱲᱤ"
+    ],
+    "nativeSpeakers_k": 7200,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Bangla alphabet",
+      "Bangla–Assamese script",
+      "Devanagari",
+      "Latin script",
+      "Odia",
+      "Ol Chiki"
+    ]
+  },
+  {
+    "iso": "hrv",
+    "iso1": "hr",
+    "countries": [
+      "Austria",
+      "Bosnia and Herzegovina",
+      "Croatia",
+      "Czech Republic",
+      "Hungary",
+      "Italy",
+      "Montenegro",
+      "Romania",
+      "Serbia",
+      "Slovakia",
+      "Slovenia"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Croatian",
+    "nativeNames": [
+      "hrvatski",
+      "hrvatski jezik"
+    ],
+    "nativeSpeakers_k": 7000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Gaj's Latin alphabet"
+    ]
+  },
+  {
+    "iso": "sck",
+    "iso1": null,
+    "countries": [
+      "Bangladesh",
+      "Bhutan",
+      "India",
+      "Nepal"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Nagpuri",
+    "nativeNames": [
+      "नागपुरी",
+      "सादरी"
+    ],
+    "nativeSpeakers_k": 7000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Bangla–Assamese script",
+      "Devanagari",
+      "Odia"
+    ]
+  },
+  {
+    "iso": "kas",
+    "iso1": "ks",
+    "countries": [
+      "India",
+      "Pakistan"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Kashmiri",
+    "nativeNames": [
+      "کٲشُر",
+      "कॉशुर",
+      "𑆑𑆳𑆯𑆶𑆫𑇀"
+    ],
+    "nativeSpeakers_k": 6900,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari",
+      "Persian alphabet",
+      "Sharada"
+    ]
+  },
+  {
+    "iso": "hye",
+    "iso1": "hy",
+    "countries": [
+      "Argentina",
+      "Armenia",
+      "Australia",
+      "Azerbaijan",
+      "Cyprus",
+      "France",
+      "Georgia",
+      "Germany",
+      "Greece",
+      "Iran",
+      "Lebanon",
+      "Malta",
+      "Republic of Artsakh",
+      "Russia",
+      "Syria",
+      "Turkey",
+      "United States",
+      "Uruguay"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Armenian",
+    "nativeNames": [
+      "հայերեն"
+    ],
+    "nativeSpeakers_k": 6700,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Armenian alphabet"
+    ]
+  },
+  {
+    "iso": "kik",
+    "iso1": "ki",
+    "countries": [
+      "Kenya"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Gikuyu",
+    "nativeNames": [
+      "Gĩgĩkũyũ",
+      "Gĩkũyũ"
+    ],
+    "nativeSpeakers_k": 6623,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "pst",
+    "iso1": null,
+    "countries": [
+      "Pakistan"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Central Pashto",
+    "nativeNames": [],
+    "nativeSpeakers_k": 6520,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "lua",
+    "iso1": null,
+    "countries": [
+      "Angola",
+      "Democratic Republic of the Congo"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Luba-Kasai",
+    "nativeNames": [
+      "Tshiluba"
+    ],
+    "nativeSpeakers_k": 6300,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "sqi",
+    "iso1": "sq",
+    "countries": [
+      "Albania"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Albanian",
+    "nativeNames": [
+      "Gjuha shqipe"
+    ],
+    "nativeSpeakers_k": 6200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Albanian alphabet",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "nod",
+    "iso1": null,
+    "countries": [
+      "Laos",
+      "Thailand"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Northern Thai",
+    "nativeNames": [
+      "คำเมือง",
+      "ᨣᩤᩴᨾᩮᩬᩥᨦ"
+    ],
+    "nativeSpeakers_k": 6029,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Tai Tham",
+      "Thai alphabet"
+    ]
+  },
+  {
+    "iso": "dan",
+    "iso1": "da",
+    "countries": [
+      "Denmark",
+      "Faroe Islands",
+      "Germany",
+      "Greenland",
+      "Kingdom of Denmark"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Danish",
+    "nativeNames": [
+      "dansk"
+    ],
+    "nativeSpeakers_k": 6000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "lmn",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Lambadi",
+    "nativeNames": [],
+    "nativeSpeakers_k": 6000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari",
+      "Kannada script",
+      "Telugu"
+    ]
+  },
+  {
+    "iso": "slk",
+    "iso1": "sk",
+    "countries": [
+      "Hungary",
+      "Romania",
+      "Serbia",
+      "Slovakia",
+      "Ukraine"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Slovak",
+    "nativeNames": [
+      "slovenský jazyk",
+      "slovenčina"
+    ],
+    "nativeSpeakers_k": 6000,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "sot",
+    "iso1": "st",
+    "countries": [
+      "Lesotho",
+      "South Africa"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Sesotho",
+    "nativeNames": [
+      "Sesotho",
+      "seSotho"
+    ],
+    "nativeSpeakers_k": 6000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "umb",
+    "iso1": null,
+    "countries": [
+      "Angola",
+      "Namibia"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Umbundu",
+    "nativeNames": [
+      "Úmbúndú#"
+    ],
+    "nativeSpeakers_k": 6000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "wal",
+    "iso1": null,
+    "countries": [
+      "Ethiopia"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Wolayttattuwa",
+    "nativeNames": [],
+    "nativeSpeakers_k": 5830,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "kab",
+    "iso1": null,
+    "countries": [
+      "Algeria"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Kabyle",
+    "nativeNames": [
+      "Taqbaylit",
+      "taqbaylit"
+    ],
+    "nativeSpeakers_k": 5586,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "min",
+    "iso1": null,
+    "countries": [
+      "Indonesia",
+      "Malaysia",
+      "Singapore"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Minangkabau",
+    "nativeNames": [
+      "bahaso Minangkabau"
+    ],
+    "nativeSpeakers_k": 5530,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Jawi",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "suk",
+    "iso1": null,
+    "countries": [
+      "Tanzania"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Sukuma",
+    "nativeNames": [
+      "Jìsùgǔmà"
+    ],
+    "nativeSpeakers_k": 5430,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "fin",
+    "iso1": "fi",
+    "countries": [
+      "Estonia",
+      "Finland",
+      "Norway",
+      "Russia",
+      "Sweden"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Finnish",
+    "nativeNames": [
+      "suomi"
+    ],
+    "nativeSpeakers_k": 5413,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Latin script",
+      "Scandinavian Braille"
+    ]
+  },
+  {
+    "iso": "lao",
+    "iso1": "lo",
+    "countries": [
+      "Cambodia",
+      "Laos"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Lao",
+    "nativeNames": [
+      "ພາສາລາວ",
+      "ລາວ"
+    ],
+    "nativeSpeakers_k": 5225,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Lao"
+    ]
+  },
+  {
+    "iso": "mon",
+    "iso1": "mn",
+    "countries": [
+      "Mongolia",
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Mongolian",
+    "nativeNames": [
+      "монгол хэл",
+      "ᠮᠣᠩᠭᠣᠯ ᠬᠡᠯᠡ"
+    ],
+    "nativeSpeakers_k": 5200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Cyrillic script",
+      "Mongolian"
+    ]
+  },
+  {
+    "iso": "nor",
+    "iso1": "no",
+    "countries": [
+      "Norway"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Norwegian",
+    "nativeNames": [
+      "norsk"
+    ],
+    "nativeSpeakers_k": 5200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "tat",
+    "iso1": "tt",
+    "countries": [
+      "Russia"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Tatar",
+    "nativeNames": [
+      "татар теле"
+    ],
+    "nativeSpeakers_k": 5200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Cyrillic script"
+    ]
+  },
+  {
+    "iso": "bug",
+    "iso1": null,
+    "countries": [
+      "Indonesia"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Bugis",
+    "nativeNames": [
+      "basa Ogi",
+      "ᨅᨔ ᨕᨚᨁᨗ"
+    ],
+    "nativeSpeakers_k": 5017,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Lontara"
+    ]
+  },
+  {
+    "iso": "kon",
+    "iso1": "kg",
+    "countries": [
+      "Angola",
+      "Democratic Republic of the Congo",
+      "Republic of the Congo"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Kongo",
+    "nativeNames": [
+      "kikongo"
+    ],
+    "nativeSpeakers_k": 5016,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "gpe",
+    "iso1": null,
+    "countries": [
+      "Ghana"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Ghanaian Pidgin English",
+    "nativeNames": [],
+    "nativeSpeakers_k": 5000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "mtr",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Mewari",
+    "nativeNames": [],
+    "nativeSpeakers_k": 5000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "nds",
+    "iso1": null,
+    "countries": [
+      "Germany",
+      "Netherlands"
+    ],
+    "langLabel": "Low German",
+    "nativeNames": [
+      "Niedersächsisch",
+      "Plattdütsch",
+      "Plattdütsk",
+      "Plattdüütsch"
+    ],
+    "nativeSpeakers_k": 5000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "wtm",
+    "iso1": null,
+    "countries": [
+      "India"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Mewati",
+    "nativeNames": [],
+    "nativeSpeakers_k": 5000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Devanagari"
+    ]
+  },
+  {
+    "iso": "cat",
+    "iso1": "ca",
+    "countries": [
+      "Andorra",
+      "France",
+      "Italy",
+      "Spain"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Catalan",
+    "nativeNames": [
+      "català",
+      "valencià"
+    ],
+    "nativeSpeakers_k": 4873,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "scn",
+    "iso1": null,
+    "countries": [
+      "Italy"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Sicilian",
+    "nativeNames": [
+      "Sicilianu"
+    ],
+    "nativeSpeakers_k": 4700,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "czh",
+    "iso1": null,
+    "countries": [
+      "People's Republic of China"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Huizhou Chinese",
+    "nativeNames": [],
+    "nativeSpeakers_k": 4600,
+    "unescoStatus": null,
+    "writingSystems": []
+  },
+  {
+    "iso": "sag",
+    "iso1": "sg",
+    "countries": [
+      "Central African Republic",
+      "Chad",
+      "Democratic Republic of the Congo"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Sango",
+    "nativeNames": [
+      "Sango",
+      "Sängö"
+    ],
+    "nativeSpeakers_k": 4600,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "kir",
+    "iso1": "ky",
+    "countries": [
+      "Kyrgyzstan",
+      "People's Republic of China",
+      "Tajikistan"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Kyrgyz",
+    "nativeNames": [
+      "Кыргыз тили",
+      "кыргызча"
+    ],
+    "nativeSpeakers_k": 4568,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet",
+      "Cyrillic script"
+    ]
+  },
+  {
+    "iso": "sou",
+    "iso1": null,
+    "countries": [
+      "Thailand"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Southern Thai",
+    "nativeNames": [],
+    "nativeSpeakers_k": 4500,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Thai alphabet"
+    ]
+  },
+  {
+    "iso": "tsn",
+    "iso1": "tn",
+    "countries": [
+      "Botswana",
+      "Namibia",
+      "South Africa",
+      "Zimbabwe"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Tswana",
+    "nativeNames": [
+      "seTswana"
+    ],
+    "nativeSpeakers_k": 4500,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ayh",
+    "iso1": null,
+    "countries": [
+      "Brunei",
+      "Indonesia",
+      "Kenya",
+      "Malaysia",
+      "Singapore",
+      "Somalia",
+      "Tanzania",
+      "Yemen"
+    ],
+    "ethnologueStatus": "10 Extinct",
+    "langLabel": "Hadhrami Arabic",
+    "nativeNames": [
+      "اللهجة الحضرمية"
+    ],
+    "nativeSpeakers_k": 4473,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "fuc",
+    "iso1": null,
+    "countries": [
+      "Guinea",
+      "Guinea-Bissau",
+      "Mali",
+      "Mauritania",
+      "Senegal",
+      "The Gambia"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Pulaar",
+    "nativeNames": [
+      "Pulaar",
+      "بولار",
+      "𞤆𞤵𞤤𞤢𞥄𞤪"
+    ],
+    "nativeSpeakers_k": 4450,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Fula alphabets"
+    ]
+  },
+  {
+    "iso": "rif",
+    "iso1": null,
+    "countries": [
+      "Algeria",
+      "Morocco"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Tarifit",
+    "nativeNames": [
+      "Tarifit",
+      "تاريفيت",
+      "ⵜⴰⵔⵉⴼⵉⵜ"
+    ],
+    "nativeSpeakers_k": 4399,
+    "unescoStatus": "vulnerable",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ayl",
+    "iso1": null,
+    "countries": [
+      "Egypt",
+      "Libya",
+      "Niger"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Libyan Arabic",
+    "nativeNames": [],
+    "nativeSpeakers_k": 4320,
+    "rtl": true,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic alphabet"
+    ]
+  },
+  {
+    "iso": "bam",
+    "iso1": "bm",
+    "countries": [
+      "Ivory Coast",
+      "Mali"
+    ],
+    "ethnologueStatus": "8b Nearly Extinct",
+    "langLabel": "Bambara",
+    "nativeNames": [
+      "Bamanankan"
+    ],
+    "nativeSpeakers_k": 4200,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Ajami script",
+      "Latin script",
+      "Masaba",
+      "N'Ko"
+    ]
+  },
+  {
+    "iso": "uzs",
+    "iso1": null,
+    "countries": [
+      "Afghanistan",
+      "Tajikistan",
+      "Turkmenistan",
+      "Uzbekistan"
+    ],
+    "ethnologueStatus": "6b Threatened",
+    "langLabel": "Southern Uzbek",
+    "nativeNames": [
+      "اوزبیک تورکچه"
+    ],
+    "nativeSpeakers_k": 4165,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Arabic script",
+      "Persian alphabet"
+    ]
+  },
+  {
+    "iso": "lug",
+    "iso1": "lg",
+    "countries": [
+      "Uganda"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "Luganda",
+    "nativeNames": [
+      "Luganda"
+    ],
+    "nativeSpeakers_k": 4100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "nso",
+    "iso1": null,
+    "countries": [
+      "South Africa"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Northern Sotho",
+    "nativeNames": [
+      "Sepedi",
+      "Sesotho sa Leboa"
+    ],
+    "nativeSpeakers_k": 4100,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "aym",
+    "iso1": "ay",
+    "countries": [
+      "Bolivia",
+      "Chile",
+      "Peru"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Aymara",
+    "nativeNames": [
+      "Aymar aru"
+    ],
+    "nativeSpeakers_k": 4000,
+    "unescoStatus": "safe",
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "ban",
+    "iso1": null,
+    "countries": [
+      "Indonesia"
+    ],
+    "ethnologueStatus": "9 Dormant",
+    "langLabel": "Balinese",
+    "nativeNames": [
+      "Basa Bali"
+    ],
+    "nativeSpeakers_k": 4000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Balinese",
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "blu",
+    "iso1": null,
+    "countries": [],
+    "ethnologueStatus": null,
+    "langLabel": "Miao",
+    "nativeNames": [],
+    "nativeSpeakers_k": 4000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script",
+      "Miao",
+      "Pahawh Hmong"
+    ]
+  },
+  {
+    "iso": "ksw",
+    "iso1": null,
+    "countries": [
+      "Myanmar",
+      "Thailand"
+    ],
+    "ethnologueStatus": "8a Moribund",
+    "langLabel": "S'gaw Karen",
+    "nativeNames": [],
+    "nativeSpeakers_k": 4000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "S'gaw Karen Script"
+    ]
+  },
+  {
+    "iso": "lit",
+    "iso1": "lt",
+    "countries": [
+      "Belarus",
+      "Lithuania",
+      "Poland"
+    ],
+    "ethnologueStatus": "6a Vigorous",
+    "langLabel": "Lithuanian",
+    "nativeNames": [
+      "Lietuviškai",
+      "Lietuvių kalba"
+    ],
+    "nativeSpeakers_k": 4000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Latin script"
+    ]
+  },
+  {
+    "iso": "nob",
+    "iso1": "nb",
+    "countries": [
+      "Norway"
+    ],
+    "ethnologueStatus": null,
+    "langLabel": "Bokmål",
+    "nativeNames": [
+      "bokmål"
+    ],
+    "nativeSpeakers_k": 4000,
+    "unescoStatus": null,
+    "writingSystems": [
+      "Dano-Norwegian alphabet",
+      "Latin script"
+    ]
+  }
+]
