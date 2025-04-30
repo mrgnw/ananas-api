@@ -25,8 +25,13 @@ mkdir -p .git/hooks && \
 	chmod +x .git/hooks/pre-commit
 ```
 
+### Publish
 
 ```sh
 #!/bin/zsh
 wrangler deploy
 ```
+
+```sh
+ bunx wrangler deploy --env dev
+ ```
