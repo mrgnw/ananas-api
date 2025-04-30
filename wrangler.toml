@@ -8,3 +8,12 @@ binding = "AI"
 [observability]
 enabled = true
 head_sampling_rate = 1
+
+[env.dev]
+name = "ananas-api-dev"
+account_id = "45f7f4b4da37f89ca6dd2a6ee900da1a"
+
+[[d1_databases]]
+binding = "DB" # available in your Worker on env.DB
+database_name = "lexi"
+database_id = "52718208-ba54-4fc7-bf33-b4521fc1c8a5"
