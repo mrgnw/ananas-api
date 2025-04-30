@@ -29,7 +29,8 @@ function handleGetRequest() {
       "language_definition": "assumed eng"
     }
   }), {
-    headers: { 'Content-Type': 'application/json' }
+    // Specify UTF-8 encoding in the Content-Type header
+    headers: { 'Content-Type': 'application/json;charset=UTF-8' }
   });
 }
 
