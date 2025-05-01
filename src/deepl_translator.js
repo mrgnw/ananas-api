@@ -20,28 +20,6 @@ function mapAndFilterLanguages(requestedLangs, iso3To2, supportedSet) {
     return { supported, unsupported };
 }
 
-// Helper to detect language using DeepL API
-async function detect_language(text, env) {
-    const DEEPL_API_KEY = env.DEEPL_API_KEY;
-    const DEEPL_API_ENDPOINT = env.DEEPL_API_ENDPOINT || 'https://api-free.deepl.com/v2/translate';
-    const headers = {
-        'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
-        'Content-Type': 'application/json',
-    };
-    // Use EN as a dummy target
-    const payload = { text: [text], target_lang: 'EN' };
-    const resp = await fetch(DEEPL_API_ENDPOINT, {
-        method: 'POST',
-        headers,
-        body: JSON.stringify(payload),
-    });
-    if (!resp.ok) throw new Error('DeepL language detection failed');
-    const result = await resp.json();
-    return result.translations[0]?.detected_source_language;
-}
-
-export { detect_language };
-
 // Function dedicated to DeepL translation logic
 export async function translate_with_deepl(request, env, getISO2ForModel) {
     const DEEPL_API_KEY = env.DEEPL_API_KEY;
@@ -84,12 +62,12 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         }
 
         const supportedTargetsSet = new Set(deeplTargets.map(l => l.language.toUpperCase()));
-        const { supported: deeplTargets, unsupported: unsupportedTargets } =
+        const { supported: supportedTargetCodes, unsupported: unsupportedTargets } =
             mapAndFilterLanguages(targetLangs3, getISO2ForModel, supportedTargetsSet);
 
-        if (supported.length === 0) {
+        if (supportedTargetCodes.length === 0) {
             const errors = {};
-            if (unsupported.length > 0) errors.unsupported_target_langs = unsupported;
+            if (unsupportedTargets.length > 0) errors.unsupported_target_langs = unsupportedTargets;
             if (unsupportedSourceLang) errors.unsupported_source_lang = unsupportedSourceLang;
             return new Response(JSON.stringify({
                 error: "No valid target languages provided or mapped.",
@@ -104,7 +82,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         // Construct DeepL API request payload
         const payload = {
             text: [inputText], // DeepL expects an array of texts
-            target_lang: supported,
+            target_lang: supportedTargetCodes,
         };
         if (sourceLangDeepL) {
             payload.source_lang = sourceLangDeepL;
@@ -120,7 +98,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         // --- END DEBUG LOGGING ---
 
         // Instead of sending all target_langs at once, send one request per target_lang
-        const translations = await Promise.all(supported.map(async (targetLangDeepL) => {
+        const translations = await Promise.all(supportedTargetCodes.map(async (targetLangDeepL) => {
             const singlePayload = {
                 text: [inputText],
                 target_lang: targetLangDeepL,
@@ -172,7 +150,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         const responseObj = {
             [srcLang3 || 'source']: inputText,
             metadata: {
-                src_lang: srcLang3 || translations[0]?.detected_source_language || null,
+                src_lang: srcLang3 || null,
                 language_definition: languageDefinition,
                 translator: 'deepl'
             }
@@ -185,13 +163,10 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
                 responseObj[`unknown_target_${lang}`] = text;
             }
         });
-        if (!srcLang3 && translations.length > 0) {
-            responseObj.metadata.detected_source_language_deepl = translations[0].detected_source_language;
-        }
 
         // Add error info for unsupported languages (only if present, and use 'errors' key)
         const errors = {};
-        if (unsupported.length) errors.unsupported_target_langs = unsupported;
+        if (unsupportedTargets.length) errors.unsupported_target_langs = unsupportedTargets;
         if (unsupportedSourceLang) errors.unsupported_source_lang = unsupportedSourceLang;
         if (Object.keys(errors).length) responseObj.errors = errors;
 
