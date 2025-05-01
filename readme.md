@@ -1,4 +1,3 @@
-
 ### Dev
 ```sh
 wrangler dev
@@ -35,3 +34,24 @@ wrangler deploy
 ```sh
  bunx wrangler deploy --env dev
  ```
+
+### Deepl
+
+ ```sh
+ curl -X GET 'https://api-free.deepl.com/v2/languages?type=target' \
+--header "Authorization: DeepL-Auth-Key $DEEPL_API_KEY"
+```
+
+## Running Tests
+
+To run all tests:
+
+```sh
+bun test
+```
+
+To run tests in watch mode (auto-reload on file changes):
+
+```sh
+bun run test:watch
+```
