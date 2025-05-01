@@ -9,6 +9,15 @@ const deeplPreferredMap = {
     zho: "ZH-HANS", // or "ZH-HANT" for traditional
 };
 
+const deeplReverseMap = {
+  "EN-GB": "eng",
+  "EN-US": "eng",
+  "PT-PT": "por",
+  "PT-BR": "por",
+  "ZH-HANS": "zho",
+  "ZH-HANT": "zho"
+};
+
 function getDeepLTargetCode(iso3) {
     return deeplPreferredMap[iso3.toLowerCase()] || getISO2ForModel(iso3)?.toUpperCase();
 }
@@ -166,7 +175,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
             }
         };
         translations.forEach(({ lang, text }) => {
-            const targetLang3 = getISO3FromISO2(lang);
+            const targetLang3 = deeplReverseMap[lang] || getISO3FromISO2(lang);
             if (targetLang3) {
                 responseObj[targetLang3] = text;
             } else {
