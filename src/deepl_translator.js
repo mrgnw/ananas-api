@@ -1,3 +1,6 @@
+import deeplSources from './deepl-sources.json';
+import deeplTargets from './deepl-targets.json';
+
 // Function dedicated to DeepL translation logic
 export async function translate_with_deepl(request, env, getISO2ForModel) {
     const DEEPL_API_KEY = env.DEEPL_API_KEY;
@@ -55,6 +58,32 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
                 deepLToIso3Map[deepLCode] = lang3;
             }
         });
+
+        // Build sets of supported source and target languages (uppercase)
+        const supportedSources = new Set(deeplSources.map(l => l.language.toUpperCase()));
+        const supportedTargets = new Set(deeplTargets.map(l => l.language.toUpperCase()));
+
+        // Filter out unsupported target languages
+        const filteredTargetLangsDeepL = targetLangsDeepL.filter(lang => supportedTargets.has(lang));
+        const unsupportedTargetLangs = targetLangsDeepL.filter(lang => !supportedTargets.has(lang));
+
+        // Check if source language is supported (if provided)
+        let unsupportedSourceLang = null;
+        if (sourceLangDeepL && !supportedSources.has(sourceLangDeepL)) {
+            unsupportedSourceLang = sourceLangDeepL;
+        }
+
+        // If no supported target languages, return error
+        if (filteredTargetLangsDeepL.length === 0) {
+            return new Response(JSON.stringify({
+                error: "No valid target languages provided or mapped.",
+                unsupported_target_langs: unsupportedTargetLangs,
+                unsupported_source_lang: unsupportedSourceLang
+            }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+            });
+        }
 
         // Construct DeepL API request payload
         const payload = {
@@ -143,6 +172,15 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         if (!srcLang3 && translations.length > 0) {
             responseObj.metadata.detected_source_language_deepl = translations[0].detected_source_language;
         }
+
+        // Add error info for unsupported languages
+        if (unsupportedTargetLangs.length > 0 || unsupportedSourceLang) {
+            responseObj.unsupported = {
+                unsupported_target_langs: unsupportedTargetLangs,
+                unsupported_source_lang: unsupportedSourceLang
+            };
+        }
+
         return new Response(JSON.stringify(responseObj), {
             headers: { 'Content-Type': 'application/json;charset=UTF-8' }
         });
