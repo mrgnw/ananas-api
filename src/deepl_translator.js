@@ -56,7 +56,6 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
             }
         });
 
-
         // Construct DeepL API request payload
         const payload = {
             text: [inputText], // DeepL expects an array of texts
@@ -75,86 +74,75 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         console.log("DeepL Request Headers:", JSON.stringify(headersToSend, null, 2));
         // --- END DEBUG LOGGING ---
 
-
-        // Make the API call to DeepL
-        const apiResponse = await fetch(DEEPL_API_ENDPOINT, {
-            method: 'POST',
-            headers: headersToSend, // Use the logged headers
-            body: JSON.stringify(payload),
-        });
-
-        if (!apiResponse.ok) {
-            let errorDetails = `DeepL API Error (${apiResponse.status})`;
-            let rawErrorText = '';
-            try {
-                // Read the raw response body as text first
-                rawErrorText = await apiResponse.text();
-
-                if (rawErrorText && rawErrorText.trim() !== '') {
-                    errorDetails = rawErrorText.trim(); // Use trimmed raw text as default detail
-                    try {
-                        // Try parsing the text as JSON
-                        const errorJson = JSON.parse(rawErrorText);
-                        // If successful and has a message, use that
-                        if (errorJson && errorJson.message) {
-                            errorDetails = errorJson.message;
-                        }
-                    } catch (jsonError) {
-                        // JSON parsing failed, stick with the raw text
-                        console.log("DeepL error response was not valid JSON:", jsonError);
-                    }
-                } else {
-                     // Raw text was empty or whitespace
-                     errorDetails = "Received empty error response body from DeepL.";
-                     console.log("DeepL returned status", apiResponse.status, "with an empty response body.");
-                }
-
-            } catch (readError) {
-                console.error("Failed to read DeepL error response body:", readError);
-                errorDetails = "Could not read error details from DeepL response body.";
+        // Instead of sending all target_langs at once, send one request per target_lang
+        const translations = await Promise.all(targetLangsDeepL.map(async (targetLangDeepL) => {
+            const singlePayload = {
+                text: [inputText],
+                target_lang: targetLangDeepL,
+            };
+            if (sourceLangDeepL) {
+                singlePayload.source_lang = sourceLangDeepL;
             }
-
-            console.error(`DeepL API Error (${apiResponse.status}): ${errorDetails}`); // Log the details
-            return new Response(JSON.stringify({
-                error: `DeepL API request failed with status ${apiResponse.status}`,
-                details: errorDetails // Include the details in the response
-             }), {
-                status: apiResponse.status, // Forward DeepL's error status
-                headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+            // Debug log for each request
+            console.log("DeepL Single Request Payload:", JSON.stringify(singlePayload));
+            const apiResponse = await fetch(DEEPL_API_ENDPOINT, {
+                method: 'POST',
+                headers: headersToSend,
+                body: JSON.stringify(singlePayload),
             });
-        }
-
-        const result = await apiResponse.json();
+            if (!apiResponse.ok) {
+                let errorDetails = `DeepL API Error (${apiResponse.status})`;
+                let rawErrorText = '';
+                try {
+                    rawErrorText = await apiResponse.text();
+                    if (rawErrorText && rawErrorText.trim() !== '') {
+                        errorDetails = rawErrorText.trim();
+                        try {
+                            const errorJson = JSON.parse(rawErrorText);
+                            if (errorJson && errorJson.message) {
+                                errorDetails = errorJson.message;
+                            }
+                        } catch (jsonError) {
+                            console.log("DeepL error response was not valid JSON:", jsonError);
+                        }
+                    } else {
+                        errorDetails = "Received empty error response body from DeepL.";
+                        console.log("DeepL returned status", apiResponse.status, "with an empty response body.");
+                    }
+                } catch (readError) {
+                    console.error("Failed to read DeepL error response body:", readError);
+                    errorDetails = "Could not read error details from DeepL response body.";
+                }
+                throw new Error(`DeepL API request failed for ${targetLangDeepL}: ${errorDetails}`);
+            }
+            const result = await apiResponse.json();
+            return {
+                lang: targetLangDeepL,
+                text: result.translations[0]?.text,
+                detected_source_language: result.translations[0]?.detected_source_language
+            };
+        }));
 
         // Format the response similar to m2m translator
         const responseObj = {
-            // Use original srcLang3 if provided, otherwise use detected
             [srcLang3 || 'source']: inputText,
             metadata: {
-                src_lang: srcLang3 || result.translations[0]?.detected_source_language || 'unknown', // Use detected if src not provided
+                src_lang: srcLang3 || translations[0]?.detected_source_language || 'unknown',
                 language_definition: languageDefinition,
                 translator: 'deepl'
             }
         };
-
-        // Add translations, mapping back to 3-letter codes
-        result.translations.forEach((translation, index) => {
-            const targetLangDeepL = targetLangsDeepL[index]; // Get the target code used in the request
-            const targetLang3 = deepLToIso3Map[targetLangDeepL]; // Map back to original 3-letter code
+        translations.forEach(({ lang, text }) => {
+            const targetLang3 = deepLToIso3Map[lang];
             if (targetLang3) {
-                 responseObj[targetLang3] = translation.text;
+                responseObj[targetLang3] = text;
             } else {
-                // Fallback if mapping fails somehow
-                responseObj[`unknown_target_${index}`] = translation.text;
+                responseObj[`unknown_target_${lang}`] = text;
             }
         });
-
-         // Add detected source language to metadata if not user-provided
-        if (!srcLang3 && result.translations.length > 0) {
-             responseObj.metadata.detected_source_language_deepl = result.translations[0].detected_source_language;
+        if (!srcLang3 && translations.length > 0) {
+            responseObj.metadata.detected_source_language_deepl = translations[0].detected_source_language;
         }
-
-
         return new Response(JSON.stringify(responseObj), {
             headers: { 'Content-Type': 'application/json;charset=UTF-8' }
         });
