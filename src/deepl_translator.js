@@ -28,7 +28,8 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
 
         // Get source language (3-char code), optional
         const srcLang3 = data.src_lang; // e.g., 'eng'
-        const sourceLangDeepL = srcLang3 ? getISO2ForModel(srcLang3)?.toUpperCase() : undefined; // e.g., 'EN'
+        const supportedSources = new Set(deeplSources.map(l => l.language.toUpperCase()));
+        const sourceLangDeepL = srcLang3 ? getISO2ForModel(srcLang3)?.toUpperCase() : undefined;
         const unsupportedSourceLang = sourceLangDeepL && !supportedSources.has(sourceLangDeepL) ? sourceLangDeepL : null;
 
         const languageDefinition = srcLang3 ? 'user' : 'deepl-auto-detect';
@@ -164,9 +165,9 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
 
         // Add error info for unsupported languages (only if present, and use 'errors' key)
         const errors = {};
-        if (unsupported.length > 0) errors.unsupported_target_langs = unsupported;
+        if (unsupported.length) errors.unsupported_target_langs = unsupported;
         if (unsupportedSourceLang) errors.unsupported_source_lang = unsupportedSourceLang;
-        if (Object.keys(errors).length > 0) responseObj.errors = errors;
+        if (Object.keys(errors).length) responseObj.errors = errors;
 
         return new Response(JSON.stringify(responseObj), {
             headers: { 'Content-Type': 'application/json;charset=UTF-8' }
