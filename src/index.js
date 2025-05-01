@@ -1,6 +1,7 @@
 // Updated Worker script using native Cloudflare Workers AI binding
 import wikidataLanguages from './wikidata-languages.json';
-import { translate_with_m2m } from './m2m_translator.js'; // Import the function
+import { translate_with_m2m } from './m2m_translator.js';
+import { translate_with_deepl } from './deepl_translator.js'; // Import the new function
 
 // Create mapping for converting 3-digit to 2-digit codes for m2m100 model compatibility
 const ISO3_TO_ISO2_MAP = wikidataLanguages.reduce((acc, lang) => {
@@ -10,9 +11,9 @@ const ISO3_TO_ISO2_MAP = wikidataLanguages.reduce((acc, lang) => {
   return acc;
 }, {});
 
-// Convert iso3 to iso2 for m2m100 model compatibility
+// Convert iso3 to iso2 for model compatibility (used by both translators)
 function getISO2ForModel(iso3) {
-  return ISO3_TO_ISO2_MAP[iso3] || iso3;
+  return ISO3_TO_ISO2_MAP[iso3] || null; // Return null if no mapping found
 }
 
 function handleGetRequest() {
@@ -89,14 +90,77 @@ async function handlePostRequest(request, env) {
     ...translations.reduce((acc, translation) => ({ ...acc, ...translation }), {}),
     metadata: {
       src_lang: srcLang3,
-      language_definition: languageDefinition
+      language_definition: languageDefinition,
+      translator: 'm2m' // Indicate which translator was used
     }
   };
 
   return new Response(JSON.stringify(responseObj), {
-    headers: { 'Content-Type': 'application/json' }
+    headers: { 'Content-Type': 'application/json;charset=UTF-8' } // Ensure UTF-8
   });
 }
+
+// New function to handle the /test endpoint
+async function handleTestRequest(env) {
+  const DEEPL_API_KEY = env.DEEPL_API_KEY;
+  if (!DEEPL_API_KEY) {
+    return new Response(JSON.stringify({ error: "DeepL API key not configured for test." }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+    });
+  }
+
+  const DEEPL_API_ENDPOINT = env.DEEPL_API_ENDPOINT || 'https://api-free.deepl.com/v2/translate';
+  const testPayload = {
+    text: ["Que tal, amor?"],
+    target_lang: "DE"
+  };
+  const testHeaders = {
+    'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
+    'Content-Type': 'application/json',
+  };
+
+  console.log("Sending hardcoded test request to DeepL...");
+  console.log("Test Payload:", JSON.stringify(testPayload));
+  console.log("Test Headers:", JSON.stringify(testHeaders));
+
+
+  try {
+    const apiResponse = await fetch(DEEPL_API_ENDPOINT, {
+      method: 'POST',
+      headers: testHeaders,
+      body: JSON.stringify(testPayload),
+    });
+
+    const responseBody = await apiResponse.text(); // Read body once
+
+    if (!apiResponse.ok) {
+        console.error(`DeepL Test API Error (${apiResponse.status}): ${responseBody}`);
+        return new Response(JSON.stringify({
+            error: `DeepL Test API request failed with status ${apiResponse.status}`,
+            details: responseBody || "No details received."
+         }), {
+            status: apiResponse.status,
+            headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+        });
+    }
+
+    console.log("DeepL Test API Success:", responseBody);
+    // Return the successful response directly, ensuring correct content type
+    return new Response(responseBody, {
+        status: apiResponse.status,
+        headers: { 'Content-Type': 'application/json;charset=UTF-8' } // DeepL returns JSON
+    });
+
+  } catch (error) {
+      console.error("Error during DeepL test request:", error);
+      return new Response(JSON.stringify({ error: "Internal server error during test request.", details: error.message }), {
+          status: 500,
+          headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+      });
+  }
+}
+
 
 export default {
   async fetch(request, env, ctx) {
@@ -104,7 +168,7 @@ export default {
     const corsHeaders = {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type, api_key'
+      'Access-Control-Allow-Headers': 'Content-Type, api_key, Authorization' // Allow Authorization for DeepL key potentially
     };
 
     // Handle OPTIONS requests for CORS preflight
@@ -122,19 +186,37 @@ export default {
       if (request.method === "GET" && pathname === "/") {
         response = await handleGetRequest();
       } else if (request.method === "POST" && pathname === "/") {
+        // Keep '/' POST route using the original m2m logic via handlePostRequest
         response = await handlePostRequest(request, env);
       } else if (request.method === "POST" && pathname === "/m2m") {
-        // Pass getISO2ForModel function to the imported translator
+        // Route '/m2m' POST to the dedicated m2m translator function
         response = await translate_with_m2m(request, env, getISO2ForModel);
-      } else {
+      } else if (request.method === "POST" && pathname === "/deepl") {
+        // Route '/deepl' POST to the new deepl translator function
+        response = await translate_with_deepl(request, env, getISO2ForModel);
+      } else if (request.method === "POST" && pathname === "/test") { // Add the new test route
+        response = await handleTestRequest(env);
+      }
+       else {
         response = new Response("Not Found", { status: 404 });
       }
 
-      // Add CORS headers to the response
+      // Ensure response exists before adding headers
+      if (!response) {
+         response = new Response("Internal Server Error: No response generated.", { status: 500 });
+      }
+
+      // Add CORS headers to the final response
       const headers = new Headers(response.headers);
       Object.entries(corsHeaders).forEach(([key, value]) => {
         headers.set(key, value);
       });
+
+      // Ensure Content-Type includes charset=UTF-8 for JSON responses
+      if (headers.get('Content-Type')?.includes('application/json') && !headers.get('Content-Type')?.includes('charset')) {
+          headers.set('Content-Type', headers.get('Content-Type') + ';charset=UTF-8');
+      }
+
 
       return new Response(response.body, {
         status: response.status,
@@ -143,11 +225,12 @@ export default {
       });
     } catch (error) {
       console.error("Error processing request:", error);
-      return new Response(JSON.stringify({ error: error.message }), {
+      // Return error response with CORS headers
+      return new Response(JSON.stringify({ error: "Internal Server Error", details: error.message }), {
         status: 500,
         headers: {
-          'Content-Type': 'application/json',
-          ...corsHeaders
+          'Content-Type': 'application/json;charset=UTF-8',
+          ...corsHeaders // Include CORS headers in error responses too
         }
       });
     }
