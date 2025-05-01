@@ -57,7 +57,14 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         ];
 
         if (filteredTargetLangsDeepL.length === 0) {
-             return new Response(JSON.stringify({ error: "No valid target languages provided or mapped." }), {
+            const errors = {};
+            if (unsupportedTargetLangs.length > 0) errors.unsupported_target_langs = unsupportedTargetLangs;
+            if (unsupportedSourceLang) errors.unsupported_source_lang = unsupportedSourceLang;
+            return new Response(JSON.stringify({
+                error: "No valid target languages provided or mapped.",
+                errors,
+                requested_target_langs: targetLangs3
+            }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json;charset=UTF-8' }
             });
