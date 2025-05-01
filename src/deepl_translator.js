@@ -29,21 +29,34 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         // Get source language (3-char code), optional
         const srcLang3 = data.src_lang; // e.g., 'eng'
         const sourceLangDeepL = srcLang3 ? getISO2ForModel(srcLang3)?.toUpperCase() : undefined; // e.g., 'EN'
+        const unsupportedSourceLang = sourceLangDeepL && !supportedSources.has(sourceLangDeepL) ? sourceLangDeepL : null;
 
         const languageDefinition = srcLang3 ? 'user' : 'deepl-auto-detect';
 
         // Handle target languages input (3-char codes)
-        let targetLangs3 = ['deu', 'fra']; // Default languages if none provided
+        let targetLangs3 = ['eng', 'esp', 'zho']; // Default languages if none provided
         if (typeof data.tgt_langs === 'string') {
             targetLangs3 = data.tgt_langs.split(',').map(lang => lang.trim());
         } else if (Array.isArray(data.tgt_langs)) {
             targetLangs3 = data.tgt_langs;
         }
 
-        // Convert target languages to 2-char uppercase codes for DeepL
-        const targetLangsDeepL = targetLangs3.map(lang3 => getISO2ForModel(lang3)?.toUpperCase()).filter(Boolean); // e.g., ['DE', 'FR']
+        const mapped = targetLangs3.map(lang3 => ({
+            original: lang3,
+            mapped: getISO2ForModel(lang3)?.toUpperCase() || null
+        }));
 
-        if (targetLangsDeepL.length === 0) {
+        const targetLangsDeepL = mapped.filter(x => x.mapped).map(x => x.mapped);
+        const unmappedLangs = mapped.filter(x => !x.mapped).map(x => x.original);
+
+        const supportedTargets = new Set(deeplTargets.map(l => l.language.toUpperCase()));
+        const filteredTargetLangsDeepL = targetLangsDeepL.filter(l => supportedTargets.has(l));
+        const unsupportedTargetLangs = [
+            ...targetLangsDeepL.filter(l => !supportedTargets.has(l)),
+            ...unmappedLangs
+        ];
+
+        if (filteredTargetLangsDeepL.length === 0) {
              return new Response(JSON.stringify({ error: "No valid target languages provided or mapped." }), {
                 status: 400,
                 headers: { 'Content-Type': 'application/json;charset=UTF-8' }
@@ -58,32 +71,6 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
                 deepLToIso3Map[deepLCode] = lang3;
             }
         });
-
-        // Build sets of supported source and target languages (uppercase)
-        const supportedSources = new Set(deeplSources.map(l => l.language.toUpperCase()));
-        const supportedTargets = new Set(deeplTargets.map(l => l.language.toUpperCase()));
-
-        // Filter out unsupported target languages
-        const filteredTargetLangsDeepL = targetLangsDeepL.filter(lang => supportedTargets.has(lang));
-        const unsupportedTargetLangs = targetLangsDeepL.filter(lang => !supportedTargets.has(lang));
-
-        // Check if source language is supported (if provided)
-        let unsupportedSourceLang = null;
-        if (sourceLangDeepL && !supportedSources.has(sourceLangDeepL)) {
-            unsupportedSourceLang = sourceLangDeepL;
-        }
-
-        // If no supported target languages, return error
-        if (filteredTargetLangsDeepL.length === 0) {
-            return new Response(JSON.stringify({
-                error: "No valid target languages provided or mapped.",
-                unsupported_target_langs: unsupportedTargetLangs,
-                unsupported_source_lang: unsupportedSourceLang
-            }), {
-                status: 400,
-                headers: { 'Content-Type': 'application/json;charset=UTF-8' }
-            });
-        }
 
         // Construct DeepL API request payload
         const payload = {
@@ -104,7 +91,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         // --- END DEBUG LOGGING ---
 
         // Instead of sending all target_langs at once, send one request per target_lang
-        const translations = await Promise.all(targetLangsDeepL.map(async (targetLangDeepL) => {
+        const translations = await Promise.all(filteredTargetLangsDeepL.map(async (targetLangDeepL) => {
             const singlePayload = {
                 text: [inputText],
                 target_lang: targetLangDeepL,
@@ -156,7 +143,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         const responseObj = {
             [srcLang3 || 'source']: inputText,
             metadata: {
-                src_lang: srcLang3 || translations[0]?.detected_source_language || 'unknown',
+                src_lang: srcLang3 || translations[0]?.detected_source_language || null,
                 language_definition: languageDefinition,
                 translator: 'deepl'
             }
@@ -173,13 +160,11 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
             responseObj.metadata.detected_source_language_deepl = translations[0].detected_source_language;
         }
 
-        // Add error info for unsupported languages
-        if (unsupportedTargetLangs.length > 0 || unsupportedSourceLang) {
-            responseObj.unsupported = {
-                unsupported_target_langs: unsupportedTargetLangs,
-                unsupported_source_lang: unsupportedSourceLang
-            };
-        }
+        // Add error info for unsupported languages (only if present, and use 'errors' key)
+        const errors = {};
+        if (unsupportedTargetLangs.length > 0) errors.unsupported_target_langs = unsupportedTargetLangs;
+        if (unsupportedSourceLang) errors.unsupported_source_lang = unsupportedSourceLang;
+        if (Object.keys(errors).length > 0) responseObj.errors = errors;
 
         return new Response(JSON.stringify(responseObj), {
             headers: { 'Content-Type': 'application/json;charset=UTF-8' }
