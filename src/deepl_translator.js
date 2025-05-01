@@ -2,6 +2,16 @@ import deeplSources from './deepl-sources.json';
 import deeplTargets from './deepl-targets.json';
 import { getISO2ForModel, getISO3FromISO2 } from './lang_utils';
 
+// Map 3-letter codes to preferred DeepL codes for regional variants
+const deeplPreferredMap = {
+    eng: "EN-US", // or "EN-GB" for traditional
+    por: "PT-BR", // or "PT-PT" for traditional
+    zho: "ZH-HANS", // or "ZH-HANT" for traditional
+};
+
+function getDeepLTargetCode(iso3) {
+    return deeplPreferredMap[iso3.toLowerCase()] || getISO2ForModel(iso3)?.toUpperCase();
+}
 
 // Helper function to map and filter target languages
 function mapAndFilterLanguages(requestedLangs, iso3To2, supportedSet) {
@@ -48,7 +58,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         // Get source language (3-char code), optional
         const srcLang3 = data.src_lang; // e.g., 'eng'
         const supportedSources = new Set(deeplSources.map(l => l.language.toUpperCase()));
-        const sourceLangDeepL = srcLang3 ? getISO2ForModel(srcLang3)?.toUpperCase() : undefined;
+        const sourceLangDeepL = srcLang3 ? getDeepLTargetCode(srcLang3) : undefined;
         const unsupportedSourceLang = sourceLangDeepL && !supportedSources.has(sourceLangDeepL) ? sourceLangDeepL : null;
 
         const languageDefinition = srcLang3 ? 'user' : 'deepl-auto-detect';
@@ -63,7 +73,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
 
         const supportedTargetsSet = new Set(deeplTargets.map(l => l.language.toUpperCase()));
         const { supported: supportedTargetCodes, unsupported: unsupportedTargets } =
-            mapAndFilterLanguages(targetLangs3, getISO2ForModel, supportedTargetsSet);
+            mapAndFilterLanguages(targetLangs3, getDeepLTargetCode, supportedTargetsSet);
 
         if (supportedTargetCodes.length === 0) {
             const errors = {};
