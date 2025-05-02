@@ -1,0 +1,2 @@
+- [ ] add google translate as a translator
+- [ ] support multiple translators based on the languages that are passed in (e.g. if a language is unsupported in one translator, use one where it is supported)
