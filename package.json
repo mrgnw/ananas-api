@@ -7,7 +7,8 @@
     "dev": "wrangler dev",
     "deploy": "wrangler publish",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:assign": "node test-assign.js"
   },
   "author": "",
   "license": "ISC",
