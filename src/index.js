@@ -2,6 +2,7 @@
 import wikidataLanguages from './wikidata-languages.json';
 import { translate_with_m2m } from './m2m_translator.js';
 import { translate_with_deepl } from './deepl_translator.js'; // Import the new function
+import { openaiTranslate, languages as gptLanguages, handleGptRequest } from './openai.js';
 
 // Create mapping for converting 3-digit to 2-digit codes for m2m100 model compatibility
 const ISO3_TO_ISO2_MAP = wikidataLanguages.reduce((acc, lang) => {
@@ -161,7 +162,6 @@ async function handleTestRequest(env) {
   }
 }
 
-
 export default {
   async fetch(request, env, ctx) {
     // Add CORS headers for cross-origin requests
@@ -196,8 +196,10 @@ export default {
         response = await translate_with_deepl(request, env, getISO2ForModel);
       } else if (request.method === "POST" && pathname === "/test") { // Add the new test route
         response = await handleTestRequest(env);
-      }
-       else {
+      } else if (request.method === "POST" && pathname === "/openai") {
+        // Use handleGptRequest from openai.js
+        response = await handleGptRequest(request, env);
+      } else {
         response = new Response("Not Found", { status: 404 });
       }
 
