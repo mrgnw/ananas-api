@@ -144,7 +144,7 @@ export async function openaiTranslate(params) {
     .map(code => `"${code}" (${languages[code].name})`)
     .join(', ');
 
-  const prompt = `You are a professional translator. Translate the given text into all specified languages.\nRequired languages: ${langs}\n\nIMPORTANT: You MUST provide translations for ALL specified languages.\nIf the text is a phrase, proverb, slang, or colloquialism, translate for natural, native-like expression in each language.\nBe aware of times and numbers, and spell them out as they would appear in the local language with words, not digits.\n\nThe JSON response MUST include translations for ALL specified languages in this exact format:\n{\n  \"en\": \"...\",\n  \"es\": \"...\",\n  ...\n}\n\nText to translate: \"${originalText}\"\n\nRespond ONLY with the JSON object containing ALL translations:`;
+  const prompt = `You are a professional translator. Translate the given text into all specified languages.\nRequired languages: ${langs}\n\nIMPORTANT: You MUST provide translations for ALL specified languages.\nIf the text is a phrase, proverb, slang, or colloquialism, translate for natural, native-like expression in each language.\nBe aware of times and numbers, and spell them out as they would appear in the local language with words, not digits.\n\nThe JSON response MUST include translations for ALL specified languages in this exact format:\n{\n  \"eng\": \"...\",\n  \"esp\": \"...\",\n  ...\n}\n\nText to translate: \"${originalText}\"\n\nRespond ONLY with the JSON object containing ALL translations:`;
 
   const openAIUrl = 'https://api.openai.com/v1/chat/completions';
   const openAIRequestHeaders = {
@@ -197,23 +197,21 @@ export async function handleGptRequest(request, env) {
     tgt_langs = ['eng', 'spa', 'rus'];
   }
 
-  // Map 3-letter codes to 2-letter codes, track unsupported
+  // Map 3-letter codes to 2-letter codes if available, else use 3-letter code
   const supported = [];
   const unsupported = [];
   const iso3to2 = {};
   for (const code3 of tgt_langs) {
-    const code2 = ISO3_TO_ISO2_MAP[code3];
-    if (code2 && languages[code2]) {
+    const langEntry = wikidataLanguages.find(l => l.iso === code3);
+    if (langEntry) {
+      // Use iso1 if available, else fallback to iso3
+      const code2 = langEntry.iso1 || code3;
       supported.push(code2);
       iso3to2[code2] = code3;
     } else {
       unsupported.push(code3);
     }
   }
-
-  // In the context of the OpenAI translator, "supported" means the language is present in wikidata-languages.json and has a 2-letter code (iso1).
-  // If a requested target language is not in wikidata-languages.json or does not have a 2-letter code, it is simply skipped (not treated as an error or warning).
-  // This matches the permissive behavior of the OpenAI API.
 
   if (!api_key) {
     return new Response(JSON.stringify({ error: 'Missing OpenAI API key in environment variables.' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
@@ -229,9 +227,13 @@ export async function handleGptRequest(request, env) {
     const translations2 = await openaiTranslate({ originalText: text, api_key, model, tgt_langs: supported });
     // Remap keys to 3-letter codes
     const translations3 = {};
-    for (const code2 in translations2) {
-      const code3 = iso3to2[code2];
-      if (code3) translations3[code3] = translations2[code2];
+    for (const code of supported) {
+      const code3 = iso3to2[code];
+      if (translations2[code]) {
+        translations3[code3] = translations2[code];
+      } else if (translations2[code3]) {
+        translations3[code3] = translations2[code3];
+      }
     }
     const responseObj = {
       ...translations3,
