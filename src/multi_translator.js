@@ -68,6 +68,7 @@ export async function handleMultiRequest(request, env) {
     if (result.metadata) {
       if (result.metadata.src_lang && !metadata.src_lang) metadata.src_lang = result.metadata.src_lang;
       if (result.metadata.language_definition && !metadata.language_definition) metadata.language_definition = result.metadata.language_definition;
+      if (result.metadata.detected_source_language && !metadata.detected_source_language) metadata.detected_source_language = result.metadata.detected_source_language;
     }
     if (result.errors && result.errors.unsupported_target_langs) {
       errors.unsupported_target_langs.push(...result.errors.unsupported_target_langs);
