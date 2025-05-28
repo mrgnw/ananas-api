@@ -232,16 +232,23 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
                 responseObj[`unknown_target_${lang}`] = text;
             }
 
-            // Capture the first detected source language reported by DeepL if source wasn't specified by user
-            if (detected_source_language && !srcLang3 && !firstDetectedSource) {
+            // Capture the first detected source language reported by DeepL (always store it)
+            if (detected_source_language && !firstDetectedSource) {
                  firstDetectedSource = detected_source_language; // Store the DeepL code (e.g., 'EN')
             }
         });
 
-        // Update metadata with detected source if applicable
+        // Always update metadata with detected source if available
         if (firstDetectedSource) {
             // Map detected DeepL code (e.g., 'EN') back to 3-letter code ('eng') if possible
-            responseObj.metadata.detected_source_language = deeplReverseMap[firstDetectedSource] || getISO3FromISO2(firstDetectedSource) || firstDetectedSource;
+            const detectedSourceLang3 = deeplReverseMap[firstDetectedSource] || getISO3FromISO2(firstDetectedSource) || firstDetectedSource;
+            responseObj.metadata.detected_source_language = detectedSourceLang3;
+            
+            // If the detected source language is not in the target languages and no source was provided,
+            // include the original text under the detected source language key
+            if (!srcLang3 && detectedSourceLang3 && !responseObj[detectedSourceLang3]) {
+                responseObj[detectedSourceLang3] = inputText;
+            }
         }
 
 
