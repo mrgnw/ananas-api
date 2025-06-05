@@ -1,7 +1,7 @@
-import wikidataLanguages from './wikidata-languages.json' assert { type: 'json' };
-import deeplTargets from './deepl-targets.json' assert { type: 'json' };
-import m2mSupport from './m2m-support.json' assert { type: 'json' };
-import googleTranslateSupport from './google-translate-support.json' assert { type: 'json' };
+import wikidataLanguages from './wikidata-languages.json' with { type: 'json' };
+import deeplTargets from './deepl-targets.json' with { type: 'json' };
+import m2mSupport from './m2m-support.json' with { type: 'json' };
+import googleTranslateSupport from './google-translate-support.json' with { type: 'json' };
 
 export const ISO3_TO_ISO2_MAP = wikidataLanguages.reduce((acc, lang) => {
     if (lang.iso && lang.iso1) {

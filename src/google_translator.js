@@ -1,5 +1,5 @@
-import wikidataLanguages from './wikidata-languages.json' assert { type: 'json' };
-import googleTranslateSupport from './google-translate-support.json' assert { type: 'json' };
+import wikidataLanguages from './wikidata-languages.json' with { type: 'json' };
+import googleTranslateSupport from './google-translate-support.json' with { type: 'json' };
 
 // Build reverse mapping from Google Translate codes back to ISO 639-3
 const googleReverseMap = {};
@@ -130,6 +130,7 @@ async function generateAccessToken(serviceAccountKey) {
         throw error;
     }
 }
+
 
 // Function dedicated to Google Translate translation logic
 export async function translate_with_google(request, env, getISO2ForModel) {

@@ -1,6 +1,6 @@
 import deeplSources from './deepl-sources.json';
 import deeplTargets from './deepl-targets.json';
-import { getISO2ForModel, getISO3FromISO2 } from './lang_utils';
+import { getISO2ForModel, getISO3FromISO2 } from './lang_utils.js';
 
 // Map 3-letter codes to preferred DeepL codes for regional variants
 const deeplPreferredMap = {
@@ -37,6 +37,74 @@ function mapAndFilterLanguages(requestedLangs, iso3To2, supportedSet) {
     }
 
     return { supported, unsupported };
+}
+
+// Function dedicated to DeepL language detection (uses minimal translation since DeepL has no detection-only endpoint)
+export async function detect_language_with_deepl(text, env) {
+    const DEEPL_API_KEY = env.DEEPL_API_KEY;
+    if (!DEEPL_API_KEY) {
+        throw new Error("DeepL API key not configured.");
+    }
+
+    const DEEPL_API_ENDPOINT = env.DEEPL_API_ENDPOINT || 'https://api-free.deepl.com/v2/translate';
+
+    // Use English as minimal target for detection (most widely supported)
+    const requestPayload = {
+        text: [text],
+        target_lang: 'EN'
+        // Deliberately omit source_lang to trigger detection
+    };
+
+    const headersToSend = {
+        'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
+        'Content-Type': 'application/json',
+    };
+
+    console.log("DeepL Detection Request:", JSON.stringify(requestPayload, null, 2));
+
+    const apiResponse = await fetch(DEEPL_API_ENDPOINT, {
+        method: 'POST',
+        headers: headersToSend,
+        body: JSON.stringify(requestPayload),
+    });
+
+    if (!apiResponse.ok) {
+        let errorDetails = `DeepL Detection API Error (${apiResponse.status})`;
+        try {
+            const rawErrorText = await apiResponse.text();
+            if (rawErrorText && rawErrorText.trim() !== '') {
+                try {
+                    const errorJson = JSON.parse(rawErrorText);
+                    if (errorJson && errorJson.message) {
+                        errorDetails = errorJson.message;
+                    }
+                } catch (jsonError) {
+                    // Keep the raw text as error details
+                }
+            }
+        } catch (readError) {
+            console.error("Failed to read DeepL detection error response:", readError);
+        }
+        throw new Error(`DeepL Detection API request failed: ${errorDetails}`);
+    }
+
+    const result = await apiResponse.json();
+    
+    if (result.translations && result.translations.length > 0) {
+        const detectedSourceLanguage = result.translations[0].detected_source_language;
+        if (detectedSourceLanguage) {
+            // Map DeepL code back to 3-letter code
+            const detectedLang3 = deeplReverseMap[detectedSourceLanguage] || getISO3FromISO2(detectedSourceLanguage) || detectedSourceLanguage;
+            
+            console.log(`DeepL detected language: ${detectedSourceLanguage} -> ${detectedLang3}`);
+            return {
+                detectedLanguage: detectedLang3,
+                originalCode: detectedSourceLanguage
+            };
+        }
+    }
+    
+    throw new Error("No language detected by DeepL");
 }
 
 // Function dedicated to DeepL translation logic

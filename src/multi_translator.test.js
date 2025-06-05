@@ -361,4 +361,117 @@ describe('Multi Translator Fallback Logic', () => {
     expect(result.metadata).toBeDefined();
     expect(result.metadata.translator).toBeDefined();
   });
+
+  it('should use preferred translator for language detection', async () => {
+    // Mock Google Translate API responses - first for detection, then for translation
+    mockFetch([
+      {
+        ok: true,
+        data: {
+          translations: [
+            {
+              translatedText: "Hello",
+              detectedLanguageCode: "en"
+            }
+          ]
+        }
+      },
+      {
+        ok: true,
+        data: {
+          translations: [
+            {
+              translatedText: "Hola",
+              detectedLanguageCode: "en"
+            }
+          ]
+        }
+      }
+    ]);
+
+    const request = createRequest({
+      text: 'Hello',
+      tgt_langs: ['spa'],
+      detection_preference: 'google'  // Prefer Google for detection
+    });
+
+    const env = createMockEnv();
+    const response = await handleMultiRequest(request, env);
+    const result = await response.json();
+
+    expect(result.metadata.detection_preference).toBe('google');
+    expect(result.metadata.detection_used_translator).toBe('google');
+    expect(result.metadata.detected_source_language).toBeDefined();
+  });
+
+  it('should validate detection_preference parameter', async () => {
+    const request = createRequest({
+      text: 'Hello',
+      tgt_langs: ['spa'],
+      detection_preference: 'invalid'  // Invalid preference
+    });
+
+    const env = createMockEnv();
+    const response = await handleMultiRequest(request, env);
+    
+    expect(response.status).toBe(400);
+    const result = await response.json();
+    expect(result.error).toMatch(/invalid detection_preference/i);
+  });
+
+  it('should handle detection preference fallback when preferred translator fails', async () => {
+    // Mock Google Translate detection failure
+    mockFetch([
+      {
+        ok: false,
+        status: 500,
+        data: { error: 'Google detection failed' }
+      },
+      {
+        ok: true,
+        data: {
+          translations: [{ text: 'Hola', detected_source_language: 'EN' }]
+        }
+      }
+    ]);
+
+    const request = createRequest({
+      text: 'Hello',
+      tgt_langs: ['spa'],
+      detection_preference: 'google'
+    });
+
+    const env = createMockEnv();
+    const response = await handleMultiRequest(request, env);
+    const result = await response.json();
+
+    expect(result.metadata.detection_preference).toBe('google');
+    // Should not have detection_used_translator since detection failed
+    expect(result.metadata.detection_used_translator).toBe(null);
+    expect(result.spa).toBeDefined(); // Translation should still work
+  });
+
+  it('should default to auto detection when no preference specified', async () => {
+    mockFetch([
+      {
+        ok: true,
+        data: {
+          translations: [{ text: 'Hola', detected_source_language: 'EN' }]
+        }
+      }
+    ]);
+
+    const request = createRequest({
+      text: 'Hello',
+      tgt_langs: ['spa']
+      // No detection_preference specified
+    });
+
+    const env = createMockEnv();
+    const response = await handleMultiRequest(request, env);
+    const result = await response.json();
+
+    expect(result.metadata.detection_preference).toBe('auto');
+    expect(result.metadata.detection_used_translator).toBe(null);
+  });
 });
