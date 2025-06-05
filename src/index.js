@@ -2,6 +2,7 @@
 import wikidataLanguages from './wikidata-languages.json';
 import { translate_with_m2m } from './m2m_translator.js';
 import { translate_with_deepl } from './deepl_translator.js'; // Import the new function
+import { translate_with_google } from './google_translator.js'; // Import Google Translate function
 import { handleGptRequest } from './openai.js';
 import { handleMultiRequest } from './multi_translator.js';
 
@@ -38,6 +39,9 @@ function handleGetRequest() {
 }
 
 async function handlePostRequest(request, env) {
+  // This function currently handles the '/' POST route, which uses m2m
+  // We can keep it as is, or refactor it to also use translate_with_m2m
+  // For now, let's keep it separate for clarity, assuming '/' POST remains m2m
   const data = await request.json();
 
   // Get source language (3-char code)
@@ -195,6 +199,9 @@ export default {
       } else if (request.method === "POST" && pathname === "/deepl") {
         // Route '/deepl' POST to the new deepl translator function
         response = await translate_with_deepl(request, env, getISO2ForModel);
+      } else if (request.method === "POST" && pathname === "/google") {
+        // Route '/google' POST to the Google Translate function
+        response = await translate_with_google(request, env, getISO2ForModel);
       } else if (request.method === "POST" && pathname === "/test") { // Add the new test route
         response = await handleTestRequest(env);
       } else if (request.method === "POST" && pathname === "/openai") {
