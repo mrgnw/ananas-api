@@ -363,19 +363,8 @@ describe('Multi Translator Fallback Logic', () => {
   });
 
   it('should use preferred translator for language detection', async () => {
-    // Mock Google Translate API responses - first for detection, then for translation
+    // Mock Google Translate API response - Google should be prioritized first
     mockFetch([
-      {
-        ok: true,
-        data: {
-          translations: [
-            {
-              translatedText: "Hello",
-              detectedLanguageCode: "en"
-            }
-          ]
-        }
-      },
       {
         ok: true,
         data: {
@@ -420,18 +409,12 @@ describe('Multi Translator Fallback Logic', () => {
   });
 
   it('should handle detection preference fallback when preferred translator fails', async () => {
-    // Mock Google Translate detection failure
+    // Mock Google Translate failure, then M2M success as fallback
     mockFetch([
       {
         ok: false,
         status: 500,
         data: { error: 'Google detection failed' }
-      },
-      {
-        ok: true,
-        data: {
-          translations: [{ text: 'Hola', detected_source_language: 'EN' }]
-        }
       }
     ]);
 
@@ -446,9 +429,9 @@ describe('Multi Translator Fallback Logic', () => {
     const result = await response.json();
 
     expect(result.metadata.detection_preference).toBe('google');
-    // Should not have detection_used_translator since detection failed
-    expect(result.metadata.detection_used_translator).toBe(null);
-    expect(result.spa).toBeDefined(); // Translation should still work
+    // Should use fallback translator (M2M) for detection
+    expect(result.metadata.detection_used_translator).toBe('m2m');
+    expect(result.spa).toBeDefined(); // Translation should still work via fallback
   });
 
   it('should default to auto detection when no preference specified', async () => {

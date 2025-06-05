@@ -1,7 +1,6 @@
 import { translate_with_m2m } from './m2m_translator.js';
-import { translate_with_deepl, detect_language_with_deepl } from './deepl_translator.js';
+import { translate_with_deepl } from './deepl_translator.js';
 import { translate_with_google } from './google_translator.js';
-import { detect_language_with_google } from './google_detector.js';
 import { handleGptRequest } from './openai.js';
 import { assignTranslators } from './lang_utils.js';
 import wikidataLanguages from './wikidata-languages.json';
@@ -25,55 +24,29 @@ export async function handleMultiRequest(request, env) {
     return new Response(JSON.stringify({ error: 'No target languages provided.' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
   }
 
-  // Extract detection preference (defaults to first available translator)
+  // Extract detection preference (defaults to 'auto' which uses the first translator)
   const detectionPreference = data.detection_preference || 'auto';
-  const validDetectionPreferences = ['auto', 'google', 'deepl', 'openai'];
+  const validDetectionPreferences = ['auto', 'google', 'deepl', 'm2m', 'openai'];
   if (!validDetectionPreferences.includes(detectionPreference)) {
     return new Response(JSON.stringify({ 
       error: `Invalid detection_preference. Must be one of: ${validDetectionPreferences.join(', ')}` 
     }), { status: 400, headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
   }
 
-  const assignment = assignTranslators(tgt_langs, ['deepl', 'google', 'm2m', 'openai']);
+  // Determine translator priority based on detection preference
+  let translatorPriority = ['deepl', 'google', 'm2m', 'openai']; // default order
+  if (detectionPreference !== 'auto') {
+    // Move preferred translator to the front
+    translatorPriority = translatorPriority.filter(t => t !== detectionPreference);
+    translatorPriority.unshift(detectionPreference);
+  }
+
+  const assignment = assignTranslators(tgt_langs, translatorPriority);
 
   function buildReq(langs, srcLang = null) {
     const reqData = { text, tgt_langs: langs };
     if (srcLang) reqData.src_lang = srcLang;
     return { json: async () => reqData };
-  }
-
-  // Handle language detection if no source language provided
-  let detectedSourceLang = data.src_lang;
-  let detectionUsedTranslator = null;
-  
-  if (!detectedSourceLang && detectionPreference !== 'auto') {
-    console.log(`Attempting language detection using ${detectionPreference}...`);
-    
-    try {
-      let detectionResult = null;
-      
-      if (detectionPreference === 'google') {
-        detectionResult = await detect_language_with_google(text, env);
-      } else if (detectionPreference === 'deepl') {
-        detectionResult = await detect_language_with_deepl(text, env);
-      } else if (detectionPreference === 'openai') {
-        // For OpenAI, we still need to use a translation approach since it doesn't have a dedicated detection API
-        // We'll do a minimal translation to get language detection
-        const openaiResult = await handleGptRequest(buildReq(['eng']), env);
-        const result = openaiResult.json ? await openaiResult.json() : openaiResult;
-        if (result.metadata?.detected_source_language) {
-          detectionResult = { detectedLanguage: result.metadata.detected_source_language };
-        }
-      }
-      
-      if (detectionResult && detectionResult.detectedLanguage) {
-        detectedSourceLang = detectionResult.detectedLanguage;
-        detectionUsedTranslator = detectionPreference;
-        console.log(`Language detection via ${detectionPreference}: ${detectedSourceLang}`);
-      }
-    } catch (error) {
-      console.warn(`Language detection failed with ${detectionPreference}:`, error);
-    }
   }
 
   // Helper function to try a translator and return results or errors
@@ -84,10 +57,10 @@ export async function handleMultiRequest(request, env) {
       let res;
       if (translatorName === 'OpenAI' || translatorName === 'OpenAI-Fallback') {
         // OpenAI translator only takes (request, env)
-        res = await translatorFn(buildReq(langs, detectedSourceLang), env);
+        res = await translatorFn(buildReq(langs, data.src_lang), env);
       } else {
         // DeepL, Google, and M2M translators take (request, env, getISO2ForModel)
-        res = await translatorFn(buildReq(langs, detectedSourceLang), env, getISO2ForModel);
+        res = await translatorFn(buildReq(langs, data.src_lang), env, getISO2ForModel);
       }
       
       const result = res.json ? await res.json() : res;
@@ -145,10 +118,9 @@ export async function handleMultiRequest(request, env) {
   const failedLanguages = [];
   const metadata = { 
     translators: {}, 
-    src_lang: detectedSourceLang || data.src_lang, 
-    language_definition: detectedSourceLang ? (detectionUsedTranslator ? `${detectionUsedTranslator}-detection` : 'auto-detect') : (data.src_lang ? 'user' : null),
-    detection_preference: detectionPreference,
-    detection_used_translator: detectionUsedTranslator
+    src_lang: null, 
+    language_definition: null,
+    detection_preference: detectionPreference
   };
   const errors = { unsupported_target_langs: [] };
 
@@ -169,11 +141,16 @@ export async function handleMultiRequest(request, env) {
     // Add failed languages to retry list
     failedLanguages.push(...result.errors);
     
-    // Merge metadata
+    // Merge metadata - first translator sets the detection info
     if (result.metadata) {
       if (result.metadata.src_lang && !metadata.src_lang) metadata.src_lang = result.metadata.src_lang;
       if (result.metadata.language_definition && !metadata.language_definition) metadata.language_definition = result.metadata.language_definition;
       if (result.metadata.detected_source_language && !metadata.detected_source_language) metadata.detected_source_language = result.metadata.detected_source_language;
+      
+      // Track which translator provided the language detection
+      if (!metadata.detection_used_translator && (result.metadata.detected_source_language || result.metadata.src_lang)) {
+        metadata.detection_used_translator = translatorInfo.name;
+      }
     }
   }
 
