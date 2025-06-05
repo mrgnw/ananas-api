@@ -38,11 +38,23 @@ export async function translate_with_m2m(request, env, getISO2ForModel) {
     let detectedSourceLang = null;
     let srcLang3 = data.src_lang;
     if (!srcLang3) {
-        detectedSourceLang = await detect_language(data.text, env);
-        srcLang3 = detectedSourceLang ? getISO3FromISO2(detectedSourceLang) : undefined;
+        // Try DeepL detection if API key is available, otherwise default to English
+        if (env.DEEPL_API_KEY) {
+            try {
+                detectedSourceLang = await detect_language(data.text, env);
+                srcLang3 = detectedSourceLang ? getISO3FromISO2(detectedSourceLang) : 'eng';
+            } catch (error) {
+                console.warn('DeepL language detection failed, defaulting to English:', error.message);
+                srcLang3 = 'eng'; // Default to English if detection fails
+            }
+        } else {
+            console.log('No DeepL API key found, defaulting to English for source language');
+            srcLang3 = 'eng'; // Default to English if no DeepL API key
+        }
+        
         if (!srcLang3) {
             return new Response(JSON.stringify({
-                error: "Could not map detected source language from DeepL to a supported language code.",
+                error: "Could not determine source language.",
                 detected_source_language_deepl: detectedSourceLang
             }), {
                 status: 400,
@@ -52,7 +64,7 @@ export async function translate_with_m2m(request, env, getISO2ForModel) {
     }
     const src_lang = srcLang3 ? getISO2ForModel(srcLang3) : undefined;
 
-    const languageDefinition = data.src_lang ? 'user' : (detectedSourceLang ? 'deepl-detected' : 'assumed eng');
+    const languageDefinition = data.src_lang ? 'user' : (detectedSourceLang ? 'deepl-detected' : 'default-english');
 
     // Handle target languages input (3-char codes)
     let targetLangs3 = ['spa', 'jpn', 'rus']; // Default languages

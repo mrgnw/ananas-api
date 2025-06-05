@@ -1,6 +1,7 @@
 import wikidataLanguages from './wikidata-languages.json' assert { type: 'json' };
 import deeplTargets from './deepl-targets.json' assert { type: 'json' };
 import m2mSupport from './m2m-support.json' assert { type: 'json' };
+import googleTranslateSupport from './google-translate-support.json' assert { type: 'json' };
 
 export const ISO3_TO_ISO2_MAP = wikidataLanguages.reduce((acc, lang) => {
     if (lang.iso && lang.iso1) {
@@ -31,18 +32,20 @@ const deeplSupported = new Set(
     .filter(Boolean)
 );
 const m2mSupported = new Set(Object.keys(m2mSupport));
+const googleSupported = new Set(Object.keys(googleTranslateSupport));
 const openaiSupported = new Set(
   wikidataLanguages.map(l => l.iso).filter(Boolean)
 );
 
-export function assignTranslators(tgt_langs, translator_order = ['deepl', 'm2m', 'openai']) {
+export function assignTranslators(tgt_langs, translator_order = ['deepl', 'google', 'm2m', 'openai']) {
   // If no tgt_langs provided, use all 3-letter codes from wikidataLanguages
   if (!tgt_langs || tgt_langs.length === 0) {
     tgt_langs = wikidataLanguages.map(l => l.iso).filter(Boolean);
   }
-  const result = { deepl: [], m2m: [], openai: [], unsupported: [] };
+  const result = { deepl: [], google: [], m2m: [], openai: [], unsupported: [] };
   const supportMap = {
     deepl: deeplSupported,
+    google: googleSupported,
     m2m: m2mSupported,
     openai: openaiSupported
   };
@@ -51,6 +54,7 @@ export function assignTranslators(tgt_langs, translator_order = ['deepl', 'm2m',
     const iso2 = ISO3_TO_ISO2_MAP[code];
     const assigned = translator_order.find(tr =>
       (tr === 'deepl' && iso2 && supportMap.deepl.has(iso2.toLowerCase())) ||
+      (tr === 'google' && supportMap.google.has(code)) ||
       (tr === 'm2m' && iso2 && supportMap.m2m.has(iso2)) ||
       (tr === 'openai' && supportMap.openai.has(code))
     );

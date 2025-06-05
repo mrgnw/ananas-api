@@ -1,5 +1,6 @@
 {
   "name": "ananas-api",
+  "type": "module",
   "version": "0.1.0",
   "description": "Translation API for Ananas",
   "main": "src/index.js",
