@@ -34,7 +34,7 @@ export async function handleMultiRequest(request, env) {
   }
 
   // Determine translator priority based on detection preference
-  let translatorPriority = ['deepl', 'google', 'm2m', 'openai']; // default order
+  let translatorPriority = ['google', 'deepl', 'm2m', 'openai']; // default order
   if (detectionPreference !== 'auto') {
     // Move preferred translator to the front
     translatorPriority = translatorPriority.filter(t => t !== detectionPreference);

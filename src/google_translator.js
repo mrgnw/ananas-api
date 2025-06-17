@@ -1,5 +1,5 @@
-import wikidataLanguages from './wikidata-languages.json' with { type: 'json' };
-import googleTranslateSupport from './google-translate-support.json' with { type: 'json' };
+import wikidataLanguages from './wikidata-languages.json' assert { type: 'json' };
+import googleTranslateSupport from './google-translate-support.json' assert { type: 'json' };
 
 // Build reverse mapping from Google Translate codes back to ISO 639-3
 const googleReverseMap = {};
