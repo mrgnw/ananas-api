@@ -1,15 +1,15 @@
 #!/bin/zsh
 
 # Get the current branch name
-current_branch=$(git symbolic-ref --short HEAD)
+# current_branch=$(git symbolic-ref --short HEAD)
 
-# Check if there are changes in the src/ directory
-if git diff origin/$current_branch...HEAD --name-only | grep --quiet "src/"; then
-    echo "Deploying to Cloudflare Workers..."
-		if [[ "$current_branch" == "main" ]]; then
-        wrangler deploy
-    else
-        echo "- environment: $current_branch"
-        wrangler deploy --env "$current_branch"
-    fi
-fi
+# # Check if there are changes in the src/ directory
+# if git diff origin/$current_branch...HEAD --name-only | grep --quiet "src/"; then
+#     echo "Deploying to Cloudflare Workers..."
+# 		if [[ "$current_branch" == "main" ]]; then
+#         wrangler deploy
+#     else
+#         echo "- environment: $current_branch"
+#         wrangler deploy --env "$current_branch"
+#     fi
+# fi
