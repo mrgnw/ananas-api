@@ -24,6 +24,9 @@ export async function handleMultiRequest(request, env) {
     return new Response(JSON.stringify({ error: 'No target languages provided.' }), { status: 400, headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
   }
 
+  // Log incoming request data for debugging
+  console.log('MULTI translator request data:', JSON.stringify(data, null, 2));
+
   // Extract detection preference (defaults to 'auto' which uses the first translator)
   const detectionPreference = data.detection_preference || 'auto';
   const validDetectionPreferences = ['auto', 'google', 'deepl', 'm2m', 'openai'];
@@ -33,8 +36,10 @@ export async function handleMultiRequest(request, env) {
     }), { status: 400, headers: { 'Content-Type': 'application/json;charset=UTF-8' } });
   }
 
-  // Determine translator priority based on detection preference
-  let translatorPriority = ['google', 'deepl', 'm2m', 'openai']; // default order
+  // Use user-specified translators if provided, otherwise use default priority
+  let translatorPriority = data.translators || ['google', 'deepl', 'm2m', 'openai']; // Use user's translators or default order
+  console.log('Using translator priority:', translatorPriority);
+  
   if (detectionPreference !== 'auto') {
     // Move preferred translator to the front
     translatorPriority = translatorPriority.filter(t => t !== detectionPreference);
