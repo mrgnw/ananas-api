@@ -25,9 +25,9 @@ export async function handleMultiRequest(request, env) {
   }
 
   // Log incoming request data for debugging
-  console.log('MULTI translator request data:', JSON.stringify(data, null, 2));
+  console.log('🔍 MULTI translator received:', JSON.stringify(data, null, 2));
 
-  // Extract detection preference (defaults to 'auto' which uses the first translator)
+  // Extract detection preference (defaults to 'auto')
   const detectionPreference = data.detection_preference || 'auto';
   const validDetectionPreferences = ['auto', 'google', 'deepl', 'm2m', 'openai'];
   if (!validDetectionPreferences.includes(detectionPreference)) {
@@ -37,9 +37,21 @@ export async function handleMultiRequest(request, env) {
   }
 
   // Use user-specified translators if provided, otherwise use default priority
-  let translatorPriority = data.translators || ['google', 'deepl', 'm2m', 'openai']; // Use user's translators or default order
-  console.log('Using translator priority:', translatorPriority);
-  
+  let translatorPriority = data.translators || ['google', 'deepl', 'm2m', 'openai'];
+  console.log('🔍 Using translator priority:', translatorPriority);
+
+  // If OpenAI is present in translators, use it for detection
+  let detectedSrcLang = null;
+  if (translatorPriority.includes('openai')) {
+    const openaiDetectionReq = { text, tgt_langs, detect_language: true };
+    const openaiDetectionRes = await handleGptRequest({ json: async () => openaiDetectionReq }, env);
+    const openaiDetectionJson = openaiDetectionRes.json ? await openaiDetectionRes.json() : openaiDetectionRes;
+    if (openaiDetectionJson.metadata && (openaiDetectionJson.metadata.detected_source_language || openaiDetectionJson.metadata.src_lang)) {
+      detectedSrcLang = openaiDetectionJson.metadata.detected_source_language || openaiDetectionJson.metadata.src_lang;
+      data.src_lang = detectedSrcLang;
+    }
+  }
+
   if (detectionPreference !== 'auto') {
     // Move preferred translator to the front
     translatorPriority = translatorPriority.filter(t => t !== detectionPreference);
@@ -57,29 +69,25 @@ export async function handleMultiRequest(request, env) {
   // Helper function to try a translator and return results or errors
   async function tryTranslator(translatorFn, langs, translatorName) {
     if (langs.length === 0) return { translations: {}, errors: [] };
-    
     try {
       let res;
       if (translatorName === 'OpenAI' || translatorName === 'OpenAI-Fallback') {
         // OpenAI translator only takes (request, env)
-        res = await translatorFn(buildReq(langs, data.src_lang), env);
+        // If OpenAI is used for detection, pass src_lang from detection
+        res = await translatorFn(buildReq(langs, detectedSrcLang || data.src_lang), env);
       } else {
         // DeepL, Google, and M2M translators take (request, env, getISO2ForModel)
-        res = await translatorFn(buildReq(langs, data.src_lang), env, getISO2ForModel);
+        res = await translatorFn(buildReq(langs, detectedSrcLang || data.src_lang), env, getISO2ForModel);
       }
-      
       const result = res.json ? await res.json() : res;
-      
       // Check if the response indicates an error
       if (res.status && res.status >= 400) {
         console.warn(`${translatorName} failed with status ${res.status}:`, result);
         return { translations: {}, errors: langs };
       }
-      
       // Extract successful translations and failed languages
       const translations = {};
       const errors = [];
-      
       for (const lang of langs) {
         if (result[lang] && !result[lang].includes('Error translating')) {
           translations[lang] = result[lang];
@@ -87,7 +95,6 @@ export async function handleMultiRequest(request, env) {
           errors.push(lang);
         }
       }
-      
       return { translations, errors, metadata: result.metadata };
     } catch (error) {
       console.error(`${translatorName} translator failed:`, error);
