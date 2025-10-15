@@ -22,7 +22,7 @@ for (const lang of wikidataLanguages) {
 
 export default {
   async fetch(request, env) {
-    let model = "gpt-4o";
+    let model = "gpt-4.1";
 
     const db = env.TRANSLATIONS_DB;
 
@@ -163,6 +163,7 @@ export async function openaiTranslate(params) {
     model = "gpt-4o",
     tgt_langs = [],
     detect_language = false,
+    src_lang = null,
   } = params;
 
   // Filter out invalid language codes and create langs string
@@ -193,6 +194,7 @@ IMPORTANT:
 - You MUST provide translations for ALL specified languages
 - If the text is a phrase, proverb, slang, or colloquialism, translate for natural, native-like expression in each language
 - Be aware of times and numbers, and spell them out as they would appear in the local language with words, not digits
+- For very short text like single words, provide the most natural and commonly used translation
 - Include the detected source language in the metadata
 
 The JSON response MUST include translations for ALL specified languages and metadata in this exact format:
@@ -209,12 +211,23 @@ Text to translate: "${originalText}"
 
 Respond ONLY with the JSON object containing ALL translations and metadata:`;
   } else {
-    prompt = `You are a professional translator. Translate the given text into all specified languages.
-Required languages: ${langs}${languageContextPrompt}
+    // Get source language name for better prompt context
+    const sourceLangName =
+      src_lang && languages[src_lang] ? languages[src_lang].name : null;
+    const sourceContext = sourceLangName
+      ? `\n\nSOURCE LANGUAGE: The text is in ${sourceLangName} (${src_lang}).`
+      : languageContextPrompt;
 
-IMPORTANT: You MUST provide translations for ALL specified languages.
-If the text is a phrase, proverb, slang, or colloquialism, translate for natural, native-like expression in each language.
-Be aware of times and numbers, and spell them out as they would appear in the local language with words, not digits.
+    prompt = `You are a professional translator. Translate the given text into all specified languages.
+Required languages: ${langs}${sourceContext}
+
+IMPORTANT:
+- You MUST provide translations for ALL specified languages
+- Translate for natural, native-like expression in each target language
+- For very short text like single words, provide the most natural and commonly used translation
+- For informal expressions like "yo" (Spanish for "I"), translate to natural equivalents like "I" or contextual greetings if appropriate
+- If the text is a phrase, proverb, slang, or colloquialism, translate for natural expression
+- Be aware of times and numbers, and spell them out as they would appear in the local language with words, not digits
 
 The JSON response MUST include translations for ALL specified languages in this exact format:
 {
@@ -338,6 +351,7 @@ export async function handleGptRequest(request, env) {
       model,
       tgt_langs: supported,
       detect_language,
+      src_lang: body.src_lang,
     });
 
     // Remap keys to 3-letter codes
