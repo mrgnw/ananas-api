@@ -1,15 +1,10 @@
 import wikidataLanguages from "./wikidata-languages.json";
 
-// Build a language map: iso1 (2-letter) code as key, value = { name, iso, ... }
-const languages = {};
-for (const lang of wikidataLanguages) {
-  if (lang.iso1) {
-    languages[lang.iso1] = {
-      name: lang.langLabel,
-      iso: lang.iso,
-      ...lang,
-    };
-  }
+// Helper function to find language by code (3-letter or 2-letter)
+function findLanguage(code) {
+  return wikidataLanguages.find(
+    (lang) => lang.iso === code || lang.iso1 === code,
+  );
 }
 
 // Build a map from 3-letter ISO to 2-letter ISO
@@ -98,10 +93,8 @@ async function saveTranslation(db, text, translations, model) {
 function create_language_prompt(request_languages = []) {
   console.log("reqo", request_languages);
 
-  const languageCodes = new Set(Object.keys(languages));
-
   let supported_languages = request_languages.filter((lang) =>
-    languageCodes.has(lang),
+    findLanguage(lang),
   );
   console.log("suppo", supported_languages);
   let unsupported_languages = request_languages.filter(
@@ -115,7 +108,7 @@ function create_language_prompt(request_languages = []) {
   console.log("request_languages", request_languages);
 
   let language_prompts = supported_languages.map(
-    (code) => `"${code}" for ${languages[code].name}`,
+    (code) => `"${code}" for ${findLanguage(code).langLabel}`,
   );
 
   if (unsupported_languages.length > 0) {
@@ -167,13 +160,13 @@ export async function openaiTranslate(params) {
   } = params;
 
   // Filter out invalid language codes and create langs string
-  let validLanguages = tgt_langs.filter((code) => languages[code]);
+  let validLanguages = tgt_langs.filter((code) => findLanguage(code));
   if (validLanguages.length === 0) {
     validLanguages = ["en", "es", "ru"];
   }
 
   let langs = validLanguages
-    .map((code) => `"${code}" (${languages[code].name})`)
+    .map((code) => `"${code}" (${findLanguage(code).langLabel})`)
     .join(", ");
 
   // Enhanced prompt that includes source language detection context
@@ -194,7 +187,6 @@ IMPORTANT:
 - You MUST provide translations for ALL specified languages
 - If the text is a phrase, proverb, slang, or colloquialism, translate for natural, native-like expression in each language
 - Be aware of times and numbers, and spell them out as they would appear in the local language with words, not digits
-- For very short text like single words, provide the most natural and commonly used translation
 - Include the detected source language in the metadata
 
 The JSON response MUST include translations for ALL specified languages and metadata in this exact format:
@@ -212,8 +204,8 @@ Text to translate: "${originalText}"
 Respond ONLY with the JSON object containing ALL translations and metadata:`;
   } else {
     // Get source language name for better prompt context
-    const sourceLangName =
-      src_lang && languages[src_lang] ? languages[src_lang].name : null;
+    const sourceLangEntry = src_lang ? findLanguage(src_lang) : null;
+    const sourceLangName = sourceLangEntry ? sourceLangEntry.langLabel : null;
     const sourceContext = sourceLangName
       ? `\n\nSOURCE LANGUAGE: The text is in ${sourceLangName} (${src_lang}).`
       : languageContextPrompt;
@@ -223,10 +215,7 @@ Required languages: ${langs}${sourceContext}
 
 IMPORTANT:
 - You MUST provide translations for ALL specified languages
-- Translate for natural, native-like expression in each target language
-- For very short text like single words, provide the most natural and commonly used translation
-- For informal expressions like "yo" (Spanish for "I"), translate to natural equivalents like "I" or contextual greetings if appropriate
-- If the text is a phrase, proverb, slang, or colloquialism, translate for natural expression
+- If the text is a phrase, proverb, slang, or colloquialism, translate for natural, native-like expression in each language
 - Be aware of times and numbers, and spell them out as they would appear in the local language with words, not digits
 
 The JSON response MUST include translations for ALL specified languages in this exact format:
@@ -403,4 +392,4 @@ export async function handleGptRequest(request, env) {
   }
 }
 
-export { languages };
+export { findLanguage };
