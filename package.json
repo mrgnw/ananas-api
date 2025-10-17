@@ -6,7 +6,8 @@
   "main": "src/index.js",
   "scripts": {
     "dev": "wrangler dev",
-    "deploy": "wrangler publish",
+    "deploy": "wrangler deploy",
+    "deploy:dev": "wrangler deploy --env dev",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:assign": "node test-assign.js"
@@ -16,6 +17,6 @@
   "dependencies": {},
   "devDependencies": {
     "vitest": "^3.1.2",
-    "wrangler": "^3.0.0"
+    "wrangler": "^4.32.0"
   }
 }
