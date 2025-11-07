@@ -34,19 +34,36 @@ export async function handleMultiRequest(request, env) {
   // Log incoming request data for debugging
   console.log("🔍 MULTI translator received:", JSON.stringify(data, null, 2));
 
-  // Extract detection preference (defaults to 'auto')
-  const detectionPreference = data.detection_preference || "auto";
-  const validDetectionPreferences = [
-    "auto",
-    "google",
-    "deepl",
-    "m2m",
-    "openai",
-  ];
-  if (!validDetectionPreferences.includes(detectionPreference)) {
+  // Extract detection preferences (supports both single and array)
+  const validDetectors = ["google", "deepl", "m2m", "openai"];
+  let detectionPreferences = [];
+  
+  // Handle backwards compatibility: detection_preference (single) or detection_preferences (array)
+  if (data.detection_preferences) {
+    // New array format
+    if (Array.isArray(data.detection_preferences)) {
+      detectionPreferences = data.detection_preferences;
+    } else {
+      detectionPreferences = [data.detection_preferences];
+    }
+  } else if (data.detection_preference) {
+    // Old single format - backwards compatibility
+    if (data.detection_preference === "auto") {
+      detectionPreferences = validDetectors; // Run all detectors
+    } else {
+      detectionPreferences = [data.detection_preference];
+    }
+  } else {
+    // Default: run all detectors
+    detectionPreferences = validDetectors;
+  }
+
+  // Validate all detection preferences
+  const invalidDetectors = detectionPreferences.filter(d => !validDetectors.includes(d));
+  if (invalidDetectors.length > 0) {
     return new Response(
       JSON.stringify({
-        error: `Invalid detection_preference. Must be one of: ${validDetectionPreferences.join(", ")}`,
+        error: `Invalid detection preferences: ${invalidDetectors.join(", ")}. Must be one of: ${validDetectors.join(", ")}`,
       }),
       {
         status: 400,
@@ -54,6 +71,8 @@ export async function handleMultiRequest(request, env) {
       },
     );
   }
+
+  console.log("🔍 Detection preferences:", detectionPreferences);
 
   // Use user-specified translators if provided, otherwise use default priority
   let translatorPriority = data.translators || [
@@ -64,35 +83,80 @@ export async function handleMultiRequest(request, env) {
   ];
   console.log("🔍 Using translator priority:", translatorPriority);
 
-  // If OpenAI is present in translators and no src_lang provided, use it for detection
-  let detectedSrcLang = null;
-  if (translatorPriority.includes("openai") && !data.src_lang) {
-    const openaiDetectionReq = { text, tgt_langs, detect_language: true };
-    const openaiDetectionRes = await handleGptRequest(
-      { json: async () => openaiDetectionReq },
-      env,
-    );
-    const openaiDetectionJson = openaiDetectionRes.json
-      ? await openaiDetectionRes.json()
-      : openaiDetectionRes;
-    if (
-      openaiDetectionJson.metadata &&
-      (openaiDetectionJson.metadata.detected_source_language ||
-        openaiDetectionJson.metadata.src_lang)
-    ) {
-      detectedSrcLang =
-        openaiDetectionJson.metadata.detected_source_language ||
-        openaiDetectionJson.metadata.src_lang;
-      data.src_lang = detectedSrcLang;
-    }
-  }
+  // Run language detection from all requested detectors (if no src_lang provided)
+  const languageDetections = {}; // Will store {detector: detected_lang}
+  let primaryDetectedLang = null; // First successful detection for backwards compatibility
 
-  if (detectionPreference !== "auto") {
-    // Move preferred translator to the front
-    translatorPriority = translatorPriority.filter(
-      (t) => t !== detectionPreference,
-    );
-    translatorPriority.unshift(detectionPreference);
+  if (!data.src_lang && detectionPreferences.length > 0) {
+    console.log("🔍 Running language detection with:", detectionPreferences);
+    
+    // Helper to run detection with a specific translator
+    async function detectWithTranslator(detector) {
+      try {
+        let detectionResult;
+        const detectionReq = { text, tgt_langs: ["eng"], detect_language: true }; // Use minimal target for detection
+        
+        if (detector === "openai") {
+          const res = await handleGptRequest(
+            { json: async () => detectionReq },
+            env,
+          );
+          detectionResult = res.json ? await res.json() : res;
+        } else if (detector === "deepl") {
+          const res = await translate_with_deepl(
+            { json: async () => detectionReq },
+            env,
+            getISO2ForModel,
+          );
+          detectionResult = res.json ? await res.json() : res;
+        } else if (detector === "google") {
+          const res = await translate_with_google(
+            { json: async () => detectionReq },
+            env,
+            getISO2ForModel,
+          );
+          detectionResult = res.json ? await res.json() : res;
+        } else if (detector === "m2m") {
+          const res = await translate_with_m2m(
+            { json: async () => detectionReq },
+            env,
+            getISO2ForModel,
+          );
+          detectionResult = res.json ? await res.json() : res;
+        }
+
+        // Extract detected language from metadata
+        if (detectionResult?.metadata?.detected_source_language) {
+          return detectionResult.metadata.detected_source_language;
+        } else if (detectionResult?.metadata?.src_lang) {
+          return detectionResult.metadata.src_lang;
+        }
+        return null;
+      } catch (error) {
+        console.warn(`Detection failed for ${detector}:`, error.message);
+        return null;
+      }
+    }
+
+    // Run all detections in parallel
+    const detectionPromises = detectionPreferences.map(async (detector) => {
+      const detected = await detectWithTranslator(detector);
+      return { detector, detected };
+    });
+
+    const detectionResults = await Promise.all(detectionPromises);
+
+    // Collect all detection results
+    for (const { detector, detected } of detectionResults) {
+      if (detected) {
+        languageDetections[detector] = detected;
+        if (!primaryDetectedLang) {
+          primaryDetectedLang = detected; // First successful detection
+        }
+      }
+    }
+
+    console.log("🔍 Language detections collected:", languageDetections);
   }
 
   const assignment = assignTranslators(tgt_langs, translatorPriority);
@@ -110,15 +174,14 @@ export async function handleMultiRequest(request, env) {
       let res;
       if (translatorName === "OpenAI" || translatorName === "OpenAI-Fallback") {
         // OpenAI translator only takes (request, env)
-        // If OpenAI is used for detection, pass src_lang from detection
         res = await translatorFn(
-          buildReq(langs, detectedSrcLang || data.src_lang),
+          buildReq(langs, primaryDetectedLang || data.src_lang),
           env,
         );
       } else {
         // DeepL, Google, and M2M translators take (request, env, getISO2ForModel)
         res = await translatorFn(
-          buildReq(langs, detectedSrcLang || data.src_lang),
+          buildReq(langs, primaryDetectedLang || data.src_lang),
           env,
           getISO2ForModel,
         );
@@ -185,9 +248,11 @@ export async function handleMultiRequest(request, env) {
   const failedLanguages = [];
   const metadata = {
     translators: {},
-    src_lang: null,
-    language_definition: null,
-    detection_preference: detectionPreference,
+    src_lang: data.src_lang || primaryDetectedLang || null,
+    language_definition: data.src_lang ? 'user' : (primaryDetectedLang ? 'detected' : null),
+    language_detection: Object.keys(languageDetections).length > 0 ? languageDetections : undefined,
+    detected_source_language: primaryDetectedLang || null, // Backwards compatibility
+    detection_preferences: detectionPreferences, // Track which detectors were requested
   };
   const errors = { unsupported_target_langs: [] };
 
