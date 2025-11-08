@@ -1,6 +1,7 @@
 import { translate_with_m2m } from "./m2m_translator.js";
-import { translate_with_deepl } from "./deepl_translator.js";
+import { translate_with_deepl, detect_language_with_deepl } from "./deepl_translator.js";
 import { translate_with_google } from "./google_translator.js";
+import { detect_language_with_google } from "./google_detector.js";
 import { handleGptRequest } from "./openai.js";
 import { assignTranslators } from "./lang_utils.js";
 import wikidataLanguages from "./wikidata-languages.json";
@@ -93,45 +94,36 @@ export async function handleMultiRequest(request, env) {
     // Helper to run detection with a specific translator
     async function detectWithTranslator(detector) {
       try {
-        let detectionResult;
-        const detectionReq = { text, tgt_langs: ["eng"], detect_language: true }; // Use minimal target for detection
+        let detected;
         
         if (detector === "openai") {
+          // OpenAI uses translation endpoint with detect_language flag
+          const detectionReq = { text, tgt_langs: ["eng"], detect_language: true };
           const res = await handleGptRequest(
             { json: async () => detectionReq },
             env,
           );
-          detectionResult = res.json ? await res.json() : res;
+          const detectionResult = res.json ? await res.json() : res;
+          detected = detectionResult?.metadata?.detected_source_language || detectionResult?.metadata?.src_lang;
         } else if (detector === "deepl") {
-          const res = await translate_with_deepl(
-            { json: async () => detectionReq },
-            env,
-            getISO2ForModel,
-          );
-          detectionResult = res.json ? await res.json() : res;
+          // DeepL has dedicated detection function
+          detected = await detect_language_with_deepl(text, env);
         } else if (detector === "google") {
-          const res = await translate_with_google(
-            { json: async () => detectionReq },
-            env,
-            getISO2ForModel,
-          );
-          detectionResult = res.json ? await res.json() : res;
+          // Google has dedicated detection function
+          detected = await detect_language_with_google(text, env);
         } else if (detector === "m2m") {
+          // M2M uses translation endpoint with detect_language flag
+          const detectionReq = { text, tgt_langs: ["eng"], detect_language: true };
           const res = await translate_with_m2m(
             { json: async () => detectionReq },
             env,
             getISO2ForModel,
           );
-          detectionResult = res.json ? await res.json() : res;
+          const detectionResult = res.json ? await res.json() : res;
+          detected = detectionResult?.metadata?.detected_source_language || detectionResult?.metadata?.src_lang;
         }
 
-        // Extract detected language from metadata
-        if (detectionResult?.metadata?.detected_source_language) {
-          return detectionResult.metadata.detected_source_language;
-        } else if (detectionResult?.metadata?.src_lang) {
-          return detectionResult.metadata.src_lang;
-        }
-        return null;
+        return detected || null;
       } catch (error) {
         console.warn(`Detection failed for ${detector}:`, error.message);
         return null;
