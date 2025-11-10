@@ -22,6 +22,11 @@ function getDeepLTargetCode(iso3) {
     return deeplPreferredMap[iso3.toLowerCase()] || getISO2ForModel(iso3)?.toUpperCase();
 }
 
+function getDeepLSourceCode(iso3) {
+    // For source languages, DeepL only accepts base codes like "EN", not regional variants like "EN-US"
+    return getISO2ForModel(iso3)?.toUpperCase();
+}
+
 // Helper function to map and filter target languages
 function mapAndFilterLanguages(requestedLangs, iso3To2, supportedSet) {
     const supported = [];
@@ -144,8 +149,8 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
             languageDefinition = 'user';
             const srcLang2 = getISO2ForModel(srcLang3)?.toUpperCase(); // Get 2-letter code for checking support
             if (srcLang2 && supportedSourcesSet.has(srcLang2)) {
-                // It's a supported language base, get the specific DeepL code (might include regional variant)
-                sourceLangDeepL = getDeepLTargetCode(srcLang3);
+                // For source languages, use base codes only (no regional variants)
+                sourceLangDeepL = getDeepLSourceCode(srcLang3);
                 if (!sourceLangDeepL) {
                      // This case means the base lang (e.g., 'eng') is supported, but the specific 3-letter code didn't map cleanly
                      // (e.g., maybe a rare variant). Let DeepL auto-detect instead of failing.
