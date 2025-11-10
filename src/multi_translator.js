@@ -85,7 +85,8 @@ export async function handleMultiRequest(request, env) {
   console.log("🔍 Using translator priority:", translatorPriority);
 
   // Run language detection from all requested detectors (if no src_lang provided)
-  const languageDetections = {}; // Will store {detector: detected_lang}
+  const languageDetections = {}; // Will store {detector: {lang: string, success: boolean, error?: string}}
+  const detectionErrors = {}; // Will store errors for failed detections
   let primaryDetectedLang = null; // First successful detection for backwards compatibility
 
   if (!data.src_lang && detectionPreferences.length > 0) {
@@ -123,32 +124,37 @@ export async function handleMultiRequest(request, env) {
           detected = detectionResult?.metadata?.detected_source_language || detectionResult?.metadata?.src_lang;
         }
 
-        return detected || null;
+        return { detected: detected || null, error: null };
       } catch (error) {
-        console.warn(`Detection failed for ${detector}:`, error.message);
-        return null;
+        console.warn(`❌ Detection failed for ${detector}:`, error.message);
+        return { detected: null, error: error.message };
       }
     }
 
     // Run all detections in parallel
     const detectionPromises = detectionPreferences.map(async (detector) => {
-      const detected = await detectWithTranslator(detector);
-      return { detector, detected };
+      const result = await detectWithTranslator(detector);
+      return { detector, ...result };
     });
 
     const detectionResults = await Promise.all(detectionPromises);
 
-    // Collect all detection results
-    for (const { detector, detected } of detectionResults) {
+    // Collect all detection results with detailed status
+    for (const { detector, detected, error } of detectionResults) {
       if (detected) {
         languageDetections[detector] = detected;
         if (!primaryDetectedLang) {
           primaryDetectedLang = detected; // First successful detection
         }
+        console.log(`✅ ${detector} detected: ${detected}`);
+      } else {
+        detectionErrors[detector] = error || "Unknown error";
+        console.log(`❌ ${detector} failed: ${error || "Unknown error"}`);
       }
     }
 
     console.log("🔍 Language detections collected:", languageDetections);
+    console.log("🔍 Detection errors:", detectionErrors);
   }
 
   const assignment = assignTranslators(tgt_langs, translatorPriority);
@@ -239,12 +245,18 @@ export async function handleMultiRequest(request, env) {
   const finalTranslations = {};
   const failedLanguages = [];
   const metadata = {
-    translators: {},
+    translators: {}, // Will store {translator: [successful_langs]}
+    translator_attempts: {}, // Will store {lang: [attempted_translators]}
+    translator_successes: {}, // Will store {lang: successful_translator}
     src_lang: data.src_lang || primaryDetectedLang || null,
     language_definition: data.src_lang ? 'user' : (primaryDetectedLang ? 'detected' : null),
     language_detection: Object.keys(languageDetections).length > 0 ? languageDetections : undefined,
+    detection_errors: Object.keys(detectionErrors).length > 0 ? detectionErrors : undefined,
     detected_source_language: primaryDetectedLang || null, // Backwards compatibility
     detection_preferences: detectionPreferences, // Track which detectors were requested
+    detection_requested: detectionPreferences, // Which detectors were requested to run
+    detection_successful: Object.keys(languageDetections), // Which detectors successfully returned a result
+    detection_failed: Object.keys(detectionErrors), // Which detectors failed
   };
   const errors = { unsupported_target_langs: [] };
 
@@ -253,14 +265,25 @@ export async function handleMultiRequest(request, env) {
     const result = primaryResults[i];
     const translatorInfo = translatorOrder[i];
 
+    // Track attempts for each language
+    for (const lang of translatorInfo.langs) {
+      if (!metadata.translator_attempts[lang]) {
+        metadata.translator_attempts[lang] = [];
+      }
+      metadata.translator_attempts[lang].push(translatorInfo.name);
+    }
+
     // Track successful languages for this translator
     const successfulLangs = Object.keys(result.translations);
     if (successfulLangs.length > 0) {
       metadata.translators[translatorInfo.name] = successfulLangs;
     }
 
-    // Add successful translations
-    Object.assign(finalTranslations, result.translations);
+    // Add successful translations and track which translator succeeded
+    for (const [lang, translation] of Object.entries(result.translations)) {
+      finalTranslations[lang] = translation;
+      metadata.translator_successes[lang] = translatorInfo.name;
+    }
 
     // Add failed languages to retry list
     failedLanguages.push(...result.errors);
@@ -364,14 +387,23 @@ export async function handleMultiRequest(request, env) {
     for (let i = 0; i < fallbackResults.length; i++) {
       const result = fallbackResults[i];
       const translatorInfo = fallbackOrder[i];
+      const translatorName = translatorInfo.name.replace("-fallback", "");
+
+      // Track fallback attempts
+      for (const lang of translatorInfo.langs) {
+        if (!metadata.translator_attempts[lang]) {
+          metadata.translator_attempts[lang] = [];
+        }
+        metadata.translator_attempts[lang].push(translatorName);
+      }
 
       // Add successful fallback translations (only if not already translated)
       for (const [lang, translation] of Object.entries(result.translations)) {
         if (!finalTranslations[lang]) {
           finalTranslations[lang] = translation;
+          metadata.translator_successes[lang] = translatorName;
 
           // Update metadata to show this translator was used
-          const translatorName = translatorInfo.name.replace("-fallback", "");
           if (!metadata.translators[translatorName]) {
             metadata.translators[translatorName] = [];
           }
