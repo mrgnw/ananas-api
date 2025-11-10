@@ -161,6 +161,9 @@ export async function handleMultiRequest(request, env) {
 
   const assignment = assignTranslators(tgt_langs, translatorPriority);
 
+  // Store translator errors for verbose mode
+  const translatorErrors = {};
+
   function buildReq(langs, srcLang = null) {
     const reqData = { text, tgt_langs: langs };
     if (srcLang) reqData.src_lang = srcLang;
@@ -193,6 +196,11 @@ export async function handleMultiRequest(request, env) {
           `${translatorName} failed with status ${res.status}:`,
           result,
         );
+        // Store error for verbose mode
+        if (verboseMode) {
+          const errorKey = translatorName.toLowerCase().replace("-fallback", "");
+          translatorErrors[errorKey] = result.details || result.error || "Unknown error";
+        }
         return { translations: {}, errors: langs };
       }
       // Extract successful translations and failed languages
@@ -208,6 +216,11 @@ export async function handleMultiRequest(request, env) {
       return { translations, errors, metadata: result.metadata };
     } catch (error) {
       console.error(`${translatorName} translator failed:`, error);
+      // Store error for verbose mode
+      if (verboseMode) {
+        const errorKey = translatorName.toLowerCase().replace("-fallback", "");
+        translatorErrors[errorKey] = error.message || "Unknown error";
+      }
       return { translations: {}, errors: langs };
     }
   }
@@ -402,6 +415,11 @@ export async function handleMultiRequest(request, env) {
   // Remove empty errors
   if (!errors.unsupported_target_langs.length)
     delete errors.unsupported_target_langs;
+
+  // Add translator errors to verbose metadata if any occurred
+  if (verboseMode && Object.keys(translatorErrors).length > 0) {
+    verboseMetadata.translator_errors = translatorErrors;
+  }
 
   // Merge verbose metadata into base metadata if verbose mode is enabled
   const finalMetadata = verboseMode ? { ...metadata, ...verboseMetadata } : metadata;
