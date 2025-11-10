@@ -5,6 +5,7 @@ import { translate_with_deepl } from './deepl_translator.js'; // Import the new 
 import { translate_with_google } from './google_translator.js'; // Import Google Translate function
 import { handleGptRequest } from './openai.js';
 import { handleMultiRequest } from './multi_translator.js';
+import { handleStatusRequest } from './status.js';
 
 // Create mapping for converting 3-digit to 2-digit codes for m2m100 model compatibility
 const ISO3_TO_ISO2_MAP = wikidataLanguages.reduce((acc, lang) => {
@@ -209,6 +210,8 @@ export default {
         response = await handleGptRequest(request, env);
       } else if (request.method === "POST" && pathname === "/multi") {
         response = await handleMultiRequest(request, env);
+      } else if (request.method === "GET" && pathname === "/status") {
+        response = await handleStatusRequest(request, env);
       } else {
         response = new Response("Not Found", { status: 404 });
       }
