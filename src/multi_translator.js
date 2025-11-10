@@ -20,6 +20,8 @@ export async function handleMultiRequest(request, env) {
   const data = await request.json();
   const text = data.text;
   let tgt_langs = data.tgt_langs;
+  const verboseMode = data.verbose === true;
+  
   if (typeof tgt_langs === "string")
     tgt_langs = tgt_langs.split(",").map((l) => l.trim());
   if (!Array.isArray(tgt_langs) || tgt_langs.length === 0) {
@@ -244,20 +246,21 @@ export async function handleMultiRequest(request, env) {
   // Collect successful translations and failed languages
   const finalTranslations = {};
   const failedLanguages = [];
+  
+  // Base metadata - always included
   const metadata = {
-    translators: {}, // Will store {translator: [successful_langs]}
-    translator_attempts: {}, // Will store {lang: [attempted_translators]}
-    translator_successes: {}, // Will store {lang: successful_translator}
+    translators: {}, // Will store {lang: translator_name}
     src_lang: data.src_lang || primaryDetectedLang || null,
     language_definition: data.src_lang ? 'user' : (primaryDetectedLang ? 'detected' : null),
+  };
+  
+  // Verbose metadata - only included if verbose mode
+  const verboseMetadata = verboseMode ? {
+    translator_attempts: {}, // Will store {lang: [attempted_translators]}
     language_detection: Object.keys(languageDetections).length > 0 ? languageDetections : undefined,
     detection_errors: Object.keys(detectionErrors).length > 0 ? detectionErrors : undefined,
-    detected_source_language: primaryDetectedLang || null, // Backwards compatibility
-    detection_preferences: detectionPreferences, // Track which detectors were requested
-    detection_requested: detectionPreferences, // Which detectors were requested to run
-    detection_successful: Object.keys(languageDetections), // Which detectors successfully returned a result
-    detection_failed: Object.keys(detectionErrors), // Which detectors failed
-  };
+  } : {};
+  
   const errors = { unsupported_target_langs: [] };
 
   // Process primary results
@@ -265,24 +268,20 @@ export async function handleMultiRequest(request, env) {
     const result = primaryResults[i];
     const translatorInfo = translatorOrder[i];
 
-    // Track attempts for each language
-    for (const lang of translatorInfo.langs) {
-      if (!metadata.translator_attempts[lang]) {
-        metadata.translator_attempts[lang] = [];
+    // Track attempts for each language (verbose only)
+    if (verboseMode) {
+      for (const lang of translatorInfo.langs) {
+        if (!verboseMetadata.translator_attempts[lang]) {
+          verboseMetadata.translator_attempts[lang] = [];
+        }
+        verboseMetadata.translator_attempts[lang].push(translatorInfo.name);
       }
-      metadata.translator_attempts[lang].push(translatorInfo.name);
-    }
-
-    // Track successful languages for this translator
-    const successfulLangs = Object.keys(result.translations);
-    if (successfulLangs.length > 0) {
-      metadata.translators[translatorInfo.name] = successfulLangs;
     }
 
     // Add successful translations and track which translator succeeded
     for (const [lang, translation] of Object.entries(result.translations)) {
       finalTranslations[lang] = translation;
-      metadata.translator_successes[lang] = translatorInfo.name;
+      metadata.translators[lang] = translatorInfo.name;
     }
 
     // Add failed languages to retry list
@@ -294,20 +293,6 @@ export async function handleMultiRequest(request, env) {
         metadata.src_lang = result.metadata.src_lang;
       if (result.metadata.language_definition && !metadata.language_definition)
         metadata.language_definition = result.metadata.language_definition;
-      if (
-        result.metadata.detected_source_language &&
-        !metadata.detected_source_language
-      )
-        metadata.detected_source_language =
-          result.metadata.detected_source_language;
-
-      // Track which translator provided the language detection
-      if (
-        !metadata.detection_used_translator &&
-        (result.metadata.detected_source_language || result.metadata.src_lang)
-      ) {
-        metadata.detection_used_translator = translatorInfo.name;
-      }
     }
   }
 
@@ -389,25 +374,21 @@ export async function handleMultiRequest(request, env) {
       const translatorInfo = fallbackOrder[i];
       const translatorName = translatorInfo.name.replace("-fallback", "");
 
-      // Track fallback attempts
-      for (const lang of translatorInfo.langs) {
-        if (!metadata.translator_attempts[lang]) {
-          metadata.translator_attempts[lang] = [];
+      // Track fallback attempts (verbose only)
+      if (verboseMode) {
+        for (const lang of translatorInfo.langs) {
+          if (!verboseMetadata.translator_attempts[lang]) {
+            verboseMetadata.translator_attempts[lang] = [];
+          }
+          verboseMetadata.translator_attempts[lang].push(translatorName);
         }
-        metadata.translator_attempts[lang].push(translatorName);
       }
 
       // Add successful fallback translations (only if not already translated)
       for (const [lang, translation] of Object.entries(result.translations)) {
         if (!finalTranslations[lang]) {
           finalTranslations[lang] = translation;
-          metadata.translator_successes[lang] = translatorName;
-
-          // Update metadata to show this translator was used
-          if (!metadata.translators[translatorName]) {
-            metadata.translators[translatorName] = [];
-          }
-          metadata.translators[translatorName].push(lang);
+          metadata.translators[lang] = translatorName;
         }
       }
     }
@@ -422,9 +403,12 @@ export async function handleMultiRequest(request, env) {
   if (!errors.unsupported_target_langs.length)
     delete errors.unsupported_target_langs;
 
+  // Merge verbose metadata into base metadata if verbose mode is enabled
+  const finalMetadata = verboseMode ? { ...metadata, ...verboseMetadata } : metadata;
+
   const responseObj = {
     ...finalTranslations,
-    metadata,
+    metadata: finalMetadata,
     ...(Object.keys(errors).length ? { errors } : {}),
   };
 
