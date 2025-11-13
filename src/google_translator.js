@@ -134,14 +134,30 @@ async function generateAccessToken(serviceAccountKey) {
 
 // Function dedicated to Google Translate translation logic
 export async function translate_with_google(request, env, getISO2ForModel) {
-    const GOOGLE_CLOUD_PROJECT_ID = env.GOOGLE_CLOUD_PROJECT_ID;
     const GOOGLE_SERVICE_ACCOUNT_KEY = env.GOOGLE_SERVICE_ACCOUNT_KEY;
     const GOOGLE_TRANSLATE_ACCESS_TOKEN = env.GOOGLE_TRANSLATE_ACCESS_TOKEN;
+    
+    // Extract project ID from service account key if not explicitly provided
+    let GOOGLE_CLOUD_PROJECT_ID = env.GOOGLE_CLOUD_PROJECT_ID;
+    if (!GOOGLE_CLOUD_PROJECT_ID && GOOGLE_SERVICE_ACCOUNT_KEY) {
+        try {
+            const serviceAccount = JSON.parse(GOOGLE_SERVICE_ACCOUNT_KEY);
+            GOOGLE_CLOUD_PROJECT_ID = serviceAccount.project_id;
+        } catch (error) {
+            return new Response(JSON.stringify({ 
+                error: "Failed to parse Google service account key.", 
+                details: error.message 
+            }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json;charset=UTF-8' }
+            });
+        }
+    }
     
     // Check for required credentials
     if (!GOOGLE_CLOUD_PROJECT_ID) {
         return new Response(JSON.stringify({ 
-            error: "Google Translate API not configured. Please set GOOGLE_CLOUD_PROJECT_ID." 
+            error: "Google Translate API not configured. Please set GOOGLE_CLOUD_PROJECT_ID or provide GOOGLE_SERVICE_ACCOUNT_KEY with project_id." 
         }), {
             status: 500,
             headers: { 'Content-Type': 'application/json;charset=UTF-8' }
