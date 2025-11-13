@@ -164,9 +164,10 @@ export async function handleMultiRequest(request, env) {
   // Store translator errors for verbose mode
   const translatorErrors = {};
 
-  function buildReq(langs, srcLang = null) {
+  function buildReq(langs, srcLang = null, skipSourceLang = false) {
     const reqData = { text, tgt_langs: langs };
-    if (srcLang) reqData.src_lang = srcLang;
+    // Only include src_lang if provided and not explicitly skipped
+    if (srcLang && !skipSourceLang) reqData.src_lang = srcLang;
     return { json: async () => reqData };
   }
 
@@ -175,16 +176,21 @@ export async function handleMultiRequest(request, env) {
     if (langs.length === 0) return { translations: {}, errors: [] };
     try {
       let res;
+      // Determine if we should skip source_lang for this translator
+      // M2M does its own detection and may not support the detected language from other services
+      const isM2M = translatorName.includes("M2M");
+      const skipSourceLang = isM2M && primaryDetectedLang && !data.src_lang;
+      
       if (translatorName === "OpenAI" || translatorName === "OpenAI-Fallback") {
         // OpenAI translator only takes (request, env)
         res = await translatorFn(
-          buildReq(langs, primaryDetectedLang || data.src_lang),
+          buildReq(langs, primaryDetectedLang || data.src_lang, skipSourceLang),
           env,
         );
       } else {
         // DeepL, Google, and M2M translators take (request, env, getISO2ForModel)
         res = await translatorFn(
-          buildReq(langs, primaryDetectedLang || data.src_lang),
+          buildReq(langs, primaryDetectedLang || data.src_lang, skipSourceLang),
           env,
           getISO2ForModel,
         );
@@ -423,6 +429,26 @@ export async function handleMultiRequest(request, env) {
 
   // Merge verbose metadata into base metadata if verbose mode is enabled
   const finalMetadata = verboseMode ? { ...metadata, ...verboseMetadata } : metadata;
+
+  // Check if ALL translations failed
+  if (Object.keys(finalTranslations).length === 0) {
+    const errorMessage = "All translation services failed. Please check your API configuration.";
+    const errorDetails = {
+      error: errorMessage,
+      details: Object.keys(translatorErrors).length > 0 
+        ? translatorErrors 
+        : "No translators were able to complete the request.",
+      requested_languages: tgt_langs,
+      metadata: finalMetadata,
+    };
+    
+    console.error("❌ MULTI translation failed completely:", errorDetails);
+    
+    return new Response(JSON.stringify(errorDetails), {
+      status: 503, // Service Unavailable
+      headers: { "Content-Type": "application/json;charset=UTF-8" },
+    });
+  }
 
   const responseObj = {
     ...finalTranslations,
