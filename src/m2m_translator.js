@@ -1,18 +1,18 @@
 import m2mSupport from './m2m-support.json';
 import wikidataLanguages from './wikidata-languages.json';
 import { getISO2ForModel, getISO3FromISO2 } from './lang_utils';
+import { getDeepLCredentials } from './deepl_auth.js';
 
 // Helper to detect language using DeepL API (only used here)
 async function detect_language(text, env) {
-    const DEEPL_API_KEY = env.DEEPL_API_KEY;
-    const DEEPL_API_ENDPOINT = env.DEEPL_API_ENDPOINT || 'https://api-free.deepl.com/v2/translate';
+    const { apiKey, endpoint } = getDeepLCredentials(env);
     const headers = {
-        'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
+        'Authorization': `DeepL-Auth-Key ${apiKey}`,
         'Content-Type': 'application/json',
     };
     // Use EN as a dummy target
     const payload = { text: [text], target_lang: 'EN' };
-    const resp = await fetch(DEEPL_API_ENDPOINT, {
+    const resp = await fetch(endpoint, {
         method: 'POST',
         headers,
         body: JSON.stringify(payload),
