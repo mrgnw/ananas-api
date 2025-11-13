@@ -1,6 +1,7 @@
 import { translate_with_m2m } from "./m2m_translator.js";
-import { translate_with_deepl } from "./deepl_translator.js";
+import { translate_with_deepl, detect_language_with_deepl } from "./deepl_translator.js";
 import { translate_with_google } from "./google_translator.js";
+import { detect_language_with_google } from "./google_detector.js";
 import { handleGptRequest } from "./openai.js";
 import { assignTranslators } from "./lang_utils.js";
 import wikidataLanguages from "./wikidata-languages.json";
@@ -19,6 +20,8 @@ export async function handleMultiRequest(request, env) {
   const data = await request.json();
   const text = data.text;
   let tgt_langs = data.tgt_langs;
+  const verboseMode = data.verbose === true;
+  
   if (typeof tgt_langs === "string")
     tgt_langs = tgt_langs.split(",").map((l) => l.trim());
   if (!Array.isArray(tgt_langs) || tgt_langs.length === 0) {
@@ -34,19 +37,36 @@ export async function handleMultiRequest(request, env) {
   // Log incoming request data for debugging
   console.log("🔍 MULTI translator received:", JSON.stringify(data, null, 2));
 
-  // Extract detection preference (defaults to 'auto')
-  const detectionPreference = data.detection_preference || "auto";
-  const validDetectionPreferences = [
-    "auto",
-    "google",
-    "deepl",
-    "m2m",
-    "openai",
-  ];
-  if (!validDetectionPreferences.includes(detectionPreference)) {
+  // Extract detection preferences (supports both single and array)
+  const validDetectors = ["google", "deepl", "m2m", "openai"];
+  let detectionPreferences = [];
+  
+  // Handle backwards compatibility: detection_preference (single) or detection_preferences (array)
+  if (data.detection_preferences) {
+    // New array format
+    if (Array.isArray(data.detection_preferences)) {
+      detectionPreferences = data.detection_preferences;
+    } else {
+      detectionPreferences = [data.detection_preferences];
+    }
+  } else if (data.detection_preference) {
+    // Old single format - backwards compatibility
+    if (data.detection_preference === "auto") {
+      detectionPreferences = validDetectors; // Run all detectors
+    } else {
+      detectionPreferences = [data.detection_preference];
+    }
+  } else {
+    // Default: run all detectors
+    detectionPreferences = validDetectors;
+  }
+
+  // Validate all detection preferences
+  const invalidDetectors = detectionPreferences.filter(d => !validDetectors.includes(d));
+  if (invalidDetectors.length > 0) {
     return new Response(
       JSON.stringify({
-        error: `Invalid detection_preference. Must be one of: ${validDetectionPreferences.join(", ")}`,
+        error: `Invalid detection preferences: ${invalidDetectors.join(", ")}. Must be one of: ${validDetectors.join(", ")}`,
       }),
       {
         status: 400,
@@ -54,6 +74,8 @@ export async function handleMultiRequest(request, env) {
       },
     );
   }
+
+  console.log("🔍 Detection preferences:", detectionPreferences);
 
   // Use user-specified translators if provided, otherwise use default priority
   let translatorPriority = data.translators || [
@@ -64,38 +86,83 @@ export async function handleMultiRequest(request, env) {
   ];
   console.log("🔍 Using translator priority:", translatorPriority);
 
-  // If OpenAI is present in translators and no src_lang provided, use it for detection
-  let detectedSrcLang = null;
-  if (translatorPriority.includes("openai") && !data.src_lang) {
-    const openaiDetectionReq = { text, tgt_langs, detect_language: true };
-    const openaiDetectionRes = await handleGptRequest(
-      { json: async () => openaiDetectionReq },
-      env,
-    );
-    const openaiDetectionJson = openaiDetectionRes.json
-      ? await openaiDetectionRes.json()
-      : openaiDetectionRes;
-    if (
-      openaiDetectionJson.metadata &&
-      (openaiDetectionJson.metadata.detected_source_language ||
-        openaiDetectionJson.metadata.src_lang)
-    ) {
-      detectedSrcLang =
-        openaiDetectionJson.metadata.detected_source_language ||
-        openaiDetectionJson.metadata.src_lang;
-      data.src_lang = detectedSrcLang;
-    }
-  }
+  // Run language detection from all requested detectors (if no src_lang provided)
+  const languageDetections = {}; // Will store {detector: {lang: string, success: boolean, error?: string}}
+  const detectionErrors = {}; // Will store errors for failed detections
+  let primaryDetectedLang = null; // First successful detection for backwards compatibility
 
-  if (detectionPreference !== "auto") {
-    // Move preferred translator to the front
-    translatorPriority = translatorPriority.filter(
-      (t) => t !== detectionPreference,
-    );
-    translatorPriority.unshift(detectionPreference);
+  if (!data.src_lang && detectionPreferences.length > 0) {
+    console.log("🔍 Running language detection with:", detectionPreferences);
+    
+    // Helper to run detection with a specific translator
+    async function detectWithTranslator(detector) {
+      try {
+        let detected;
+        
+        if (detector === "openai") {
+          // OpenAI uses translation endpoint with detect_language flag
+          const detectionReq = { text, tgt_langs: ["eng"], detect_language: true };
+          const res = await handleGptRequest(
+            { json: async () => detectionReq },
+            env,
+          );
+          const detectionResult = res.json ? await res.json() : res;
+          detected = detectionResult?.metadata?.detected_source_language || detectionResult?.metadata?.src_lang;
+        } else if (detector === "deepl") {
+          // DeepL has dedicated detection function
+          detected = await detect_language_with_deepl(text, env);
+        } else if (detector === "google") {
+          // Google has dedicated detection function
+          detected = await detect_language_with_google(text, env);
+        } else if (detector === "m2m") {
+          // M2M uses translation endpoint with detect_language flag
+          const detectionReq = { text, tgt_langs: ["eng"], detect_language: true };
+          const res = await translate_with_m2m(
+            { json: async () => detectionReq },
+            env,
+            getISO2ForModel,
+          );
+          const detectionResult = res.json ? await res.json() : res;
+          detected = detectionResult?.metadata?.detected_source_language || detectionResult?.metadata?.src_lang;
+        }
+
+        return { detected: detected || null, error: null };
+      } catch (error) {
+        console.warn(`❌ Detection failed for ${detector}:`, error.message);
+        return { detected: null, error: error.message };
+      }
+    }
+
+    // Run all detections in parallel
+    const detectionPromises = detectionPreferences.map(async (detector) => {
+      const result = await detectWithTranslator(detector);
+      return { detector, ...result };
+    });
+
+    const detectionResults = await Promise.all(detectionPromises);
+
+    // Collect all detection results with detailed status
+    for (const { detector, detected, error } of detectionResults) {
+      if (detected) {
+        languageDetections[detector] = detected;
+        if (!primaryDetectedLang) {
+          primaryDetectedLang = detected; // First successful detection
+        }
+        console.log(`✅ ${detector} detected: ${detected}`);
+      } else {
+        detectionErrors[detector] = error || "Unknown error";
+        console.log(`❌ ${detector} failed: ${error || "Unknown error"}`);
+      }
+    }
+
+    console.log("🔍 Language detections collected:", languageDetections);
+    console.log("🔍 Detection errors:", detectionErrors);
   }
 
   const assignment = assignTranslators(tgt_langs, translatorPriority);
+
+  // Store translator errors for verbose mode
+  const translatorErrors = {};
 
   function buildReq(langs, srcLang = null) {
     const reqData = { text, tgt_langs: langs };
@@ -110,15 +177,14 @@ export async function handleMultiRequest(request, env) {
       let res;
       if (translatorName === "OpenAI" || translatorName === "OpenAI-Fallback") {
         // OpenAI translator only takes (request, env)
-        // If OpenAI is used for detection, pass src_lang from detection
         res = await translatorFn(
-          buildReq(langs, detectedSrcLang || data.src_lang),
+          buildReq(langs, primaryDetectedLang || data.src_lang),
           env,
         );
       } else {
         // DeepL, Google, and M2M translators take (request, env, getISO2ForModel)
         res = await translatorFn(
-          buildReq(langs, detectedSrcLang || data.src_lang),
+          buildReq(langs, primaryDetectedLang || data.src_lang),
           env,
           getISO2ForModel,
         );
@@ -130,6 +196,11 @@ export async function handleMultiRequest(request, env) {
           `${translatorName} failed with status ${res.status}:`,
           result,
         );
+        // Store error for verbose mode
+        if (verboseMode) {
+          const errorKey = translatorName.toLowerCase().replace("-fallback", "");
+          translatorErrors[errorKey] = result.details || result.error || "Unknown error";
+        }
         return { translations: {}, errors: langs };
       }
       // Extract successful translations and failed languages
@@ -145,6 +216,11 @@ export async function handleMultiRequest(request, env) {
       return { translations, errors, metadata: result.metadata };
     } catch (error) {
       console.error(`${translatorName} translator failed:`, error);
+      // Store error for verbose mode
+      if (verboseMode) {
+        const errorKey = translatorName.toLowerCase().replace("-fallback", "");
+        translatorErrors[errorKey] = error.message || "Unknown error";
+      }
       return { translations: {}, errors: langs };
     }
   }
@@ -183,12 +259,21 @@ export async function handleMultiRequest(request, env) {
   // Collect successful translations and failed languages
   const finalTranslations = {};
   const failedLanguages = [];
+  
+  // Base metadata - always included
   const metadata = {
-    translators: {},
-    src_lang: null,
-    language_definition: null,
-    detection_preference: detectionPreference,
+    translators: {}, // Will store {lang: translator_name}
+    src_lang: data.src_lang || primaryDetectedLang || null,
+    language_definition: data.src_lang ? 'user' : (primaryDetectedLang ? 'detected' : null),
   };
+  
+  // Verbose metadata - only included if verbose mode
+  const verboseMetadata = verboseMode ? {
+    translator_attempts: {}, // Will store {lang: [attempted_translators]}
+    language_detection: Object.keys(languageDetections).length > 0 ? languageDetections : undefined,
+    detection_errors: Object.keys(detectionErrors).length > 0 ? detectionErrors : undefined,
+  } : {};
+  
   const errors = { unsupported_target_langs: [] };
 
   // Process primary results
@@ -196,14 +281,21 @@ export async function handleMultiRequest(request, env) {
     const result = primaryResults[i];
     const translatorInfo = translatorOrder[i];
 
-    // Track successful languages for this translator
-    const successfulLangs = Object.keys(result.translations);
-    if (successfulLangs.length > 0) {
-      metadata.translators[translatorInfo.name] = successfulLangs;
+    // Track attempts for each language (verbose only)
+    if (verboseMode) {
+      for (const lang of translatorInfo.langs) {
+        if (!verboseMetadata.translator_attempts[lang]) {
+          verboseMetadata.translator_attempts[lang] = [];
+        }
+        verboseMetadata.translator_attempts[lang].push(translatorInfo.name);
+      }
     }
 
-    // Add successful translations
-    Object.assign(finalTranslations, result.translations);
+    // Add successful translations and track which translator succeeded
+    for (const [lang, translation] of Object.entries(result.translations)) {
+      finalTranslations[lang] = translation;
+      metadata.translators[lang] = translatorInfo.name;
+    }
 
     // Add failed languages to retry list
     failedLanguages.push(...result.errors);
@@ -214,20 +306,6 @@ export async function handleMultiRequest(request, env) {
         metadata.src_lang = result.metadata.src_lang;
       if (result.metadata.language_definition && !metadata.language_definition)
         metadata.language_definition = result.metadata.language_definition;
-      if (
-        result.metadata.detected_source_language &&
-        !metadata.detected_source_language
-      )
-        metadata.detected_source_language =
-          result.metadata.detected_source_language;
-
-      // Track which translator provided the language detection
-      if (
-        !metadata.detection_used_translator &&
-        (result.metadata.detected_source_language || result.metadata.src_lang)
-      ) {
-        metadata.detection_used_translator = translatorInfo.name;
-      }
     }
   }
 
@@ -307,18 +385,23 @@ export async function handleMultiRequest(request, env) {
     for (let i = 0; i < fallbackResults.length; i++) {
       const result = fallbackResults[i];
       const translatorInfo = fallbackOrder[i];
+      const translatorName = translatorInfo.name.replace("-fallback", "");
+
+      // Track fallback attempts (verbose only)
+      if (verboseMode) {
+        for (const lang of translatorInfo.langs) {
+          if (!verboseMetadata.translator_attempts[lang]) {
+            verboseMetadata.translator_attempts[lang] = [];
+          }
+          verboseMetadata.translator_attempts[lang].push(translatorName);
+        }
+      }
 
       // Add successful fallback translations (only if not already translated)
       for (const [lang, translation] of Object.entries(result.translations)) {
         if (!finalTranslations[lang]) {
           finalTranslations[lang] = translation;
-
-          // Update metadata to show this translator was used
-          const translatorName = translatorInfo.name.replace("-fallback", "");
-          if (!metadata.translators[translatorName]) {
-            metadata.translators[translatorName] = [];
-          }
-          metadata.translators[translatorName].push(lang);
+          metadata.translators[lang] = translatorName;
         }
       }
     }
@@ -333,9 +416,17 @@ export async function handleMultiRequest(request, env) {
   if (!errors.unsupported_target_langs.length)
     delete errors.unsupported_target_langs;
 
+  // Add translator errors to verbose metadata if any occurred
+  if (verboseMode && Object.keys(translatorErrors).length > 0) {
+    verboseMetadata.translator_errors = translatorErrors;
+  }
+
+  // Merge verbose metadata into base metadata if verbose mode is enabled
+  const finalMetadata = verboseMode ? { ...metadata, ...verboseMetadata } : metadata;
+
   const responseObj = {
     ...finalTranslations,
-    metadata,
+    metadata: finalMetadata,
     ...(Object.keys(errors).length ? { errors } : {}),
   };
 
