@@ -111,13 +111,23 @@ async function generateAccessToken(serviceAccountKey) {
 
 // Function dedicated to Google Translate language detection only
 export async function detect_language_with_google(text, env) {
-    const GOOGLE_CLOUD_PROJECT_ID = env.GOOGLE_CLOUD_PROJECT_ID;
     const GOOGLE_SERVICE_ACCOUNT_KEY = env.GOOGLE_SERVICE_ACCOUNT_KEY;
     const GOOGLE_TRANSLATE_ACCESS_TOKEN = env.GOOGLE_TRANSLATE_ACCESS_TOKEN;
     
+    // Extract project ID from service account key if not explicitly provided
+    let GOOGLE_CLOUD_PROJECT_ID = env.GOOGLE_CLOUD_PROJECT_ID;
+    if (!GOOGLE_CLOUD_PROJECT_ID && GOOGLE_SERVICE_ACCOUNT_KEY) {
+        try {
+            const serviceAccount = JSON.parse(GOOGLE_SERVICE_ACCOUNT_KEY);
+            GOOGLE_CLOUD_PROJECT_ID = serviceAccount.project_id;
+        } catch (error) {
+            throw new Error(`Failed to parse Google service account key: ${error.message}`);
+        }
+    }
+    
     // Check for required credentials
     if (!GOOGLE_CLOUD_PROJECT_ID) {
-        throw new Error("Google Translate API not configured. Please set GOOGLE_CLOUD_PROJECT_ID.");
+        throw new Error("Google Translate API not configured. Please set GOOGLE_CLOUD_PROJECT_ID or provide GOOGLE_SERVICE_ACCOUNT_KEY with project_id.");
     }
     
     // Generate or use provided access token
