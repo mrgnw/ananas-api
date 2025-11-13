@@ -1,6 +1,7 @@
 import deeplSources from './deepl-sources.json';
 import deeplTargets from './deepl-targets.json';
 import { getISO2ForModel, getISO3FromISO2 } from './lang_utils.js';
+import { getDeepLCredentials } from './deepl_auth.js';
 
 // Map 3-letter codes to preferred DeepL codes for regional variants
 const deeplPreferredMap = {
@@ -46,12 +47,7 @@ function mapAndFilterLanguages(requestedLangs, iso3To2, supportedSet) {
 
 // Function dedicated to DeepL language detection (uses minimal translation since DeepL has no detection-only endpoint)
 export async function detect_language_with_deepl(text, env) {
-    const DEEPL_API_KEY = env.DEEPL_API_KEY;
-    if (!DEEPL_API_KEY) {
-        throw new Error("DeepL API key not configured.");
-    }
-
-    const DEEPL_API_ENDPOINT = env.DEEPL_API_ENDPOINT || 'https://api-free.deepl.com/v2/translate';
+    const { apiKey, endpoint } = getDeepLCredentials(env);
 
     // Use English as minimal target for detection (most widely supported)
     const requestPayload = {
@@ -61,13 +57,13 @@ export async function detect_language_with_deepl(text, env) {
     };
 
     const headersToSend = {
-        'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
+        'Authorization': `DeepL-Auth-Key ${apiKey}`,
         'Content-Type': 'application/json',
     };
 
     console.log("DeepL Detection Request:", JSON.stringify(requestPayload, null, 2));
 
-    const apiResponse = await fetch(DEEPL_API_ENDPOINT, {
+    const apiResponse = await fetch(endpoint, {
         method: 'POST',
         headers: headersToSend,
         body: JSON.stringify(requestPayload),
@@ -114,17 +110,19 @@ export async function detect_language_with_deepl(text, env) {
 
 // Function dedicated to DeepL translation logic
 export async function translate_with_deepl(request, env, getISO2ForModel) {
-    const DEEPL_API_KEY = env.DEEPL_API_KEY;
-    if (!DEEPL_API_KEY) {
-        return new Response(JSON.stringify({ error: "DeepL API key not configured." }), {
+    // Get DeepL credentials
+    let apiKey, endpoint;
+    try {
+        ({ apiKey, endpoint } = getDeepLCredentials(env));
+    } catch (error) {
+        return new Response(JSON.stringify({ 
+            error: error.message,
+            details: "DeepL API credentials are not properly configured."
+        }), {
             status: 500,
             headers: { 'Content-Type': 'application/json;charset=UTF-8' }
         });
     }
-
-    // Determine API endpoint (use free tier by default)
-    // You might want to make this configurable via env vars too
-    const DEEPL_API_ENDPOINT = env.DEEPL_API_ENDPOINT || 'https://api-free.deepl.com/v2/translate';
 
     try {
         const data = await request.json();
@@ -226,7 +224,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
         // --- BEGIN DEBUG LOGGING ---
         console.log("DeepL Request Payload:", JSON.stringify(payloadBase, null, 2));
         const headersToSend = {
-            'Authorization': `DeepL-Auth-Key ${DEEPL_API_KEY}`,
+            'Authorization': `DeepL-Auth-Key ${apiKey}`,
             'Content-Type': 'application/json',
         };
         console.log("DeepL Request Headers:", JSON.stringify(headersToSend, null, 2));
@@ -240,7 +238,7 @@ export async function translate_with_deepl(request, env, getISO2ForModel) {
             };
             // Debug log for each request
             console.log("DeepL Single Request Payload:", JSON.stringify(singlePayload));
-            const apiResponse = await fetch(DEEPL_API_ENDPOINT, {
+            const apiResponse = await fetch(endpoint, {
                 method: 'POST',
                 headers: headersToSend,
                 body: JSON.stringify(singlePayload),
