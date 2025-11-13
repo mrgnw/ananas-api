@@ -253,7 +253,21 @@ Respond ONLY with the JSON object containing ALL translations:`;
     body: openAIBody,
   });
   if (!response.ok) {
-    throw new Error(`OpenAI API error: ${response.status}`);
+    // Get more detailed error information for rate limits
+    let errorDetails = `${response.status}`;
+    try {
+      const errorData = await response.json();
+      if (errorData.error) {
+        errorDetails = errorData.error.message || errorData.error.type || errorDetails;
+        // Log rate limit details if available
+        if (response.status === 429 && errorData.error) {
+          console.error('OpenAI Rate Limit Error:', JSON.stringify(errorData.error, null, 2));
+        }
+      }
+    } catch (e) {
+      // If we can't parse the error response, use the status code
+    }
+    throw new Error(`OpenAI API error: ${errorDetails}`);
   }
   const result = await response.json();
   const aiResponseContent = result.choices[0].message.content;
